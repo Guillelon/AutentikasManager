@@ -1,0 +1,140 @@
+﻿@model autentikasManager.ViewModels.DashboardViewModel
+<div class="row">
+    <div class="col-lg-2">
+        <!-- Members online -->
+        <div class="card bg-teal-400">
+            <div class="card-body">
+                <div class="d-flex">
+                    <h3 class="font-weight-semibold mb-0"> <i class="icon-cart"></i> @Model.PendingOrders</h3>
+                </div>
+                <div>
+                    Ordenes Pendientes
+                </div>
+            </div>
+        </div>
+        <!-- /members online -->
+    </div>
+    <div class="col-lg-3">
+        <!-- Members online -->
+        <div class="card bg-indigo-400">
+            <div class="card-body">
+                <div class="d-flex">
+                    @if (Model.DatesInfo != null && Model.DatesInfo.Count > 0)
+                    {
+                        <h3 class="font-weight-semibold mb-0">
+                            <i class="icon-calendar"></i>
+                            @Model.DatesInfo.FirstOrDefault().TentativeDeliveryDateFormattedLong
+                        </h3>
+                    }
+                </div>
+                <div>
+                    Próxima fecha de delivery
+                </div>
+            </div>
+        </div>
+        <!-- /members online -->
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-3">
+        <div class="card">
+            <div class="card-header header-elements-sm-inline">
+                <h3><i class="icon-pie-chart"></i> Top Sabores</h3>
+            </div>
+            <div class="card-body">
+                <div>
+                    <div class="loaded-charts">
+                        <canvas id="salesChart" width="75" height="75"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header header-elements-sm-inline">
+                <h3><i class="icon-chart"></i> Top Presentaciones</h3>
+            </div>
+            <div class="card-body">
+                <div>
+                    <div class="loaded-charts">
+                        <canvas id="productsChart" width="200" height="100"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+        var randomScalingFactor = function () {
+            return Math.round(Math.random() * 100);
+        };
+
+        var config = {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    data: [
+						@Model.KakaoCount,
+						@Model.KanelaCount,
+	                    @Model.KookieCount,
+                    ],
+                    backgroundColor: [
+                        '#4F2F2D',
+                        '#D99C59',
+                        '#6C4E4C',
+                    ],
+                    label: 'Dataset 1'
+                }],
+                labels: [
+                    'Kakao',
+                    'Kanela',
+                    'Kookie',
+                ]
+            },
+            options: {
+                responsive: true
+            }
+        };
+
+        var ctx = document.getElementById('salesChart').getContext('2d');
+        var pie = new Chart(ctx, config);
+        var packagesName = '@Html.Raw(Json.Encode(Model.PackageCount.Select(p => p.Name)))';
+        var dataPackagesName = JSON.parse(packagesName);
+        var packagesCount = '@Html.Raw(Json.Encode(Model.PackageCount.Select(p => p.PackageCount)))';
+        var dataPackagesCount = JSON.parse(packagesCount);
+        console.log(dataPackagesName);
+        console.log(dataPackagesCount);
+        var bar = new Chart(document.getElementById("productsChart"), {
+            type: 'horizontalBar',
+            data: {
+              labels: dataPackagesName,
+              datasets: [
+                {
+                  label: "Population (millions)",
+                  backgroundColor: ["#4F2F2D", "#D99C59","#6C4E4C","#040707","#DA9E5A"],
+                  data: dataPackagesCount
+                }
+              ]
+            },
+            options: {
+                 scales: {
+                    xAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
+              legend: { display: false },
+              title: {
+                display: true,
+                text: 'Ordenes'
+              }
+            }
+        });
+    })
+</script>

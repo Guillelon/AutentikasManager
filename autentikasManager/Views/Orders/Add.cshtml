@@ -1,0 +1,403 @@
+﻿@model int?
+<div id="AddOrderHub">
+    <div class="row">
+        <div class="col-md-2">
+
+        </div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group text-center text-muted content-divider">
+                        <span class="px-2">Información del cliente</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group form-group-feedback form-group-feedback-left">
+                                <input data-bind="value: ClientName" class="form-control" placeholder="Nombre" />
+                                <div class="form-control-feedback">
+                                    <i class="icon-user text-muted"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-group-feedback form-group-feedback-left">
+                                <input data-bind="value: ClientPhone" class="form-control" placeholder="Teléfono" />
+                                <div class="form-control-feedback">
+                                    <i class="icon-phone text-muted"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group form-group-feedback form-group-feedback-left">
+                                <input data-bind="value: ClientEmail" class="form-control" placeholder="Email" />
+                                <div class="form-control-feedback">
+                                    <i class="icon-envelop text-muted"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-group-feedback form-group-feedback-left">
+                                <input data-bind="value: TentativeDeliveryDate" data-date-format="dd/mm/yyyy" class="datepicker form-control" placeholder="Fecha de entrega" />
+                                <div class="form-control-feedback">
+                                    <i class="icon-calendar text-muted"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group form-group-feedback form-group-feedback-left">
+                                <input data-bind="value: ClientAddress" class="form-control" placeholder="Dirección" />
+                                <div class="form-control-feedback">
+                                    <i class="icon-mailbox text-muted"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-group-feedback form-group-feedback-left">
+                                <select class="form-control" data-bind="value: PaymentMethod">
+                                    <option>Efectivo</option>
+                                    <option>Transferencia</option>
+                                </select>
+                                <div class="form-control-feedback">
+                                    <i class="icon-credit-card text-muted"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group text-center text-muted content-divider">
+                        <span class="px-2">Detalles del Pedido</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6" style="padding-top:20px">
+                            <div class="form-group form-group-feedback form-group-feedback-left">
+                                <select class="form-control" data-bind="options: Packages,
+                                                                optionsText: 'Name',
+                                                                optionsValue: 'Id',
+                                                                value: SelectedPackage,
+                                                                optionsCaption: 'Seleccionar Presentación'"></select>
+                                <div class="form-control-feedback">
+                                    <i class="icon-cart text-muted"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div data-bind="visible: SelectedQuantityNeeded() > 0">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <small>Kookies</small>
+                                        <input data-bind="value: KookiesSelected" type="number" class="form-control" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <small>Kakao</small>
+                                        <input data-bind="value: KakaoSelected" type="number" class="form-control" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <small>Kanela</small>
+                                        <input data-bind="value: KanelaSelected" type="number" class="form-control" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div style="text-align:center">
+                                            <small>Total</small>
+                                        </div>
+                                        <input data-bind="value: GetTotalSelected" type="number" class="form-control" disabled />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" data-bind="visible: SelectedPackage() > 0">
+                        <div class="col-md-6">
+                            <small>Costo</small>
+                            <div class="form-group form-group-feedback form-group-feedback-left">
+                                <input data-bind="value: SelectedCost" class="form-control" type="number" placeholder="Costo" />
+                                <div class="form-control-feedback">
+                                    <i class="icon-coin-dollar text-muted"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <small>Precio</small>
+                            <div class="form-group form-group-feedback form-group-feedback-left">
+                                <input data-bind="value: SelectedPrice" class="form-control" type="number" placeholder="Precio" />
+                                <div class="form-control-feedback">
+                                    <i class="icon-coin-dollar text-muted"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" data-bind="visible: SelectedPackage() > 0">
+                        <div class="col-md-12">
+                            <button class="btn bg-teal-400 btn-block" data-bind="enable: ReadyToAdd, click: Add">Agregar al pedido</button>
+                        </div>
+                    </div>
+                    <div class="form-group text-center text-muted content-divider">
+                        <span class="px-2"></span>
+                    </div>
+                    <div class="row" data-bind="visible: OrderDetails().length > 0">
+                        <div class="col-md-12">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <td>Nombre</td>
+                                        <td>Costo</td>
+                                        <td>Precio</td>
+                                        <td></td>
+                                    </tr>
+                                </thead>
+                                <tbody data-bind="foreach: OrderDetails">
+                                    <tr>
+                                        <td data-bind="text: Name"></td>
+                                        <td data-bind="text: Cost.formatMoney(2)"></td>
+                                        <td data-bind="text: Price.formatMoney(2)"></td>
+                                        <td data-bind="click: $parent.Delete" style="text-align:center">
+                                            <i class="icon-trash"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="2" style="text-align:right">
+                                            <strong>Total </strong>
+                                        </td>
+                                        <td colspan="2" style="text-align:center">
+                                            <strong>
+                                                <text data-bind="text: Total().formatMoney(2)"></text>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                    <div style="padding-top:25px" class="row" data-bind="visible: OrderDetails().length > 0">
+                        <div class="col-md-12">
+                            <button data-bind="click: Process" class="btn bg-teal-400 btn-block">
+                                @if (!Model.HasValue)
+                                {
+                                    <strong>Procesar pedido <i class="icon-cart-add"></i> </strong>
+                                }
+                                else
+                                {
+                                    <strong>Editar pedido <i class="icon-cart-add"></i> </strong>
+                                }
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="sucessModal" role="dialog" data-toggle="modal" data-backdrop="static" data-keyboard="false" class="bootbox modal bootbox-alert" tabindex="-1" aria-modal="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success">
+                    @if (Model.HasValue)
+                    {
+
+                        <h6 class="modal-title">Pedido editado con éxito</h6>
+                    }
+                    else
+                    {
+
+                        <h6 class="modal-title">Pedido procesado con éxito</h6>
+                    }
+                </div>
+
+                <div class="modal-body" style="text-align:center">
+                    <img src="~/Images/Logo.png" width="450" />
+                </div>
+
+                <div class="modal-footer" style="text-align:center">
+                    <a href="/Orders/Index" class="btn bg-teal-400 btn-block">Aceptar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        function ViewModel() {
+            var self = this;
+            @if (Model.HasValue)
+            {
+                <text>self.OrderId = @Model;</text>
+            }
+            else{
+                <text>self.OrderId = 0;</text>
+            }
+
+            self.Packages = ko.observableArray();
+            self.SelectedPackage = ko.observable(0);
+            self.SelectedQuantityNeeded = ko.observable();
+            self.KookiesSelected = ko.observable(0);
+            self.SelectedPrice = ko.observable();
+            self.SelectedCost = ko.observable();
+            self.KanelaSelected = ko.observable(0);
+            self.KakaoSelected = ko.observable(0);
+            self.TotalSelected = ko.observable(0);
+            self.SelectedName = ko.observable();
+            self.OrderDetails = ko.observableArray();
+            self.ClientName = ko.observable();
+            self.ClientPhone = ko.observable();
+            self.ClientAddress = ko.observable();
+            self.ClientEmail = ko.observable();
+            self.PaymentMethod = ko.observable();
+            self.TentativeDeliveryDate = ko.observable();
+
+            $('.datepicker').datepicker({
+                minDate: 0,
+            });
+
+            self.GetData = function () {
+                $.ajax({
+                    url: '/Package/GetPackages/',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        self.Packages([]);
+                        for (var i = 0; i < data.length; i++) {
+                            self.Packages.push(new Package(data[i]));
+                        }
+                    }
+                });
+            }
+
+            self.Add = function () {
+                self.OrderDetails.push(new Detail(self.SelectedName(), self.SelectedPackage(), self.KakaoSelected(),
+                    self.KanelaSelected(), self.KookiesSelected(),
+                    self.SelectedPrice(), self.SelectedCost(), self.OrderId, 0));
+                self.EmptyAll();
+            }
+
+            self.Delete = function (toDelete) {
+                self.OrderDetails.remove(toDelete);
+            }
+
+            self.Total = ko.computed(function () {
+                var total = 0;
+
+                ko.utils.arrayForEach(self.OrderDetails(), function (item) {
+                    total += parseFloat(item.Price);
+                });
+
+                return total;
+            }, self);
+
+            self.ReadyToAdd = ko.computed(function () {
+                if (self.SelectedPackage() > 0) {
+                    if (self.GetTotalSelected() >= self.SelectedQuantityNeeded())
+                        return true;
+                }
+                return false;
+            })
+
+            self.GetTotalSelected = ko.pureComputed(function () {
+                var total = parseInt(self.KookiesSelected()) + parseInt(self.KanelaSelected()) + parseInt(self.KakaoSelected());
+                return total;
+            }, self);
+
+            self.SelectedPackage.subscribe(function (newValue) {
+                self.EmptyAll();
+                var selectedPackage = ko.utils.arrayFirst(self.Packages(), function (item) {
+                    return item.Id === newValue;
+                });
+                if (selectedPackage != null) {
+                    self.SelectedName(selectedPackage.Name());
+                    self.SelectedPrice(selectedPackage.Price());
+                    self.SelectedCost(selectedPackage.Cost());
+                    self.SelectedQuantityNeeded(selectedPackage.CookiesQuantity());
+                }
+                else {
+                    self.SelectedQuantityNeeded(0);
+                }
+            })
+
+            self.EmptyAll = function () {
+                self.KanelaSelected(0);
+                self.KookiesSelected(0);
+                self.KakaoSelected(0);
+                self.TotalSelected(0);
+            }
+
+            self.Process = function () {
+                var order = new Object();
+                order.Id = self.OrderId;
+                order.ClientName = self.ClientName();
+                order.ClientPhone = self.ClientPhone();
+                order.ClientAddress = self.ClientAddress();
+                order.ClientEmail = self.ClientEmail();
+                order.OrderDetails = self.OrderDetails();
+                order.PaymentMethod = self.PaymentMethod();
+                order.TentativeDeliveryDate = self.TentativeDeliveryDate();
+                url = '/Orders/Process';
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: order,
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#sucessModal').modal('show');
+                    }
+                });
+            }
+
+            self.GetOrder = function () {
+                $.ajax({
+                    url: '/Orders/GetOrder/'+ self.OrderId,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        self.ClientName(data.ClientName);
+                        self.ClientPhone(data.ClientPhone);
+                        self.ClientAddress(data.ClientAddress);
+                        self.ClientEmail(data.ClientEmail);
+                        self.PaymentMethod(data.PaymentMethod);
+                        self.TentativeDeliveryDate(data.TentativeDeliveryDateFormatted);
+                        for (var i = 0; i < data.OrderDetails.length; i++) {
+                            var detail = data.OrderDetails[i];
+                            self.OrderDetails.push(new Detail(detail.Package.Name, detail.PackageId,
+                                                              detail.KakaoCount, detail.KanelaCount,
+                                                              detail.KookieCount, detail.Price, detail.Cost,
+                                                              detail.OrderId, detail.Id));
+                        }
+                    }
+                });
+            }
+        }
+
+        function Package (data) {
+            var self = this;
+            self.Id = data.Id;
+            self.Name = ko.observable(data.Name);
+            self.CookiesQuantity = ko.observable(data.CookiesQuantity);
+            self.Price = ko.observable(data.Price);
+            self.Cost = ko.observable(data.Cost);
+        }
+
+        function Detail (name, packageId, KakaoCount, KanelaCount, KookieCount,
+            price, cost, orderId, detailId) {
+            var self = this;
+            self.Id = detailId;
+            self.OrderId = orderId;
+            self.Name = name;
+            self.PackageId = packageId;
+            self.KakaoCount = KakaoCount;
+            self.KanelaCount = KanelaCount;
+            self.KookieCount = KookieCount;
+            self.Price = parseFloat(price);
+            self.Cost = parseFloat(cost);
+            return self;
+        }
+
+        var viewModel = new ViewModel();
+        ko.applyBindings(viewModel, document.getElementById('AddOrderHub'));
+        viewModel.GetData();
+        @if (Model.HasValue)
+        {
+            <text>viewModel.GetOrder();</text>
+        }
+    })
+</script>

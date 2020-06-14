@@ -1,0 +1,100 @@
+﻿@{
+    Layout = null;
+}
+<!-- Main sidebar -->
+<div class="sidebar sidebar-dark sidebar-main sidebar-expand-md">
+    <!-- Sidebar mobile toggler -->
+    <div class="sidebar-mobile-toggler text-center">
+        <a href="#/" class="sidebar-mobile-main-toggle">
+            <i class="icon-arrow-left8"></i>
+        </a>
+        Navigation
+        <a href="#/" class="sidebar-mobile-expand">
+            <i class="icon-screen-full"></i>
+            <i class="icon-screen-normal"></i>
+        </a>
+    </div>
+
+    <!-- /sidebar mobile toggler -->
+    <!-- Sidebar content -->
+    <div class="sidebar-content">
+        @{
+            string CurrentURL = Request.Url.AbsoluteUri;
+        }
+        <div class="sidebar-user">
+            <div class="card-body">
+                <div class="mr-3" style="text-align:center">
+                    <img src="~/Images/LogoAlt.png" width="100" />
+                </div>
+                <div class="media">
+                    <div class="media-body">
+                        <div class="media-title font-weight-semibold">Sarah Hovsepian</div>
+                        <div class="font-size-xs opacity-50">
+                            <i class="icon-pin font-size-sm"></i> &nbsp;Madrid, ES
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card card-sidebar-mobile">
+            <ul class="nav nav-sidebar" data-nav-type="accordion">
+                <li class="nav-item">
+                    @if (CurrentURL.Contains("Dashboard"))
+                    {
+                        <a href="/Home/Dashboard" class="nav-link active">
+                            <i class="icon-home4"></i>
+                            <span>
+                                Dashboard
+                            </span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="/Home/Dashboard" class="nav-link">
+                            <i class="icon-home4"></i>
+                            <span>
+                                Dashboard
+                            </span>
+                        </a>
+                    }
+
+
+                </li>
+
+                <li class="nav-item">
+                    @if (CurrentURL.Contains("Orders"))
+                    {
+                        <a href="/Orders/Index" class="nav-link active"> <i class="icon-cart"></i> Ordenes</a>
+                    }
+                    else
+                    {
+                        <a href="/Orders/Index" class="nav-link"> <i class="icon-cart"></i> Ordenes</a>
+                    }
+                </li>
+
+                @{
+                    var configDisplay = "none";
+                    var extraClass = "";
+                    if (CurrentURL.Contains("Membership") || CurrentURL.Contains("ChargeableItem") || CurrentURL.Contains("Staff") ||
+                        CurrentURL.Contains("Product") || CurrentURL.Contains("SystemParameters"))
+                    {
+                        configDisplay = "block";
+                        extraClass = "nav-item-open";
+                    };
+                }
+
+                @{
+                    configDisplay = "none";
+                    extraClass = "";
+                    if (CurrentURL.Contains("Report"))
+                    {
+                        configDisplay = "block";
+                        extraClass = "nav-item-open";
+                    };
+                }
+
+            </ul>
+        </div>
+    </div>
+</div>
+
