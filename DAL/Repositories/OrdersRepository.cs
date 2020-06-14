@@ -22,6 +22,11 @@ namespace DAL.Repositories
             return _context.Order.ToList();
         }
 
+        public IList<Order> GetPending()
+        {
+            return _context.Order.Where(o => !o.Delivered || !o.Prepared || !o.Paid).OrderBy(o => o.TentativeDeliveryDate).ToList();
+        }
+
         public IList<Order> GetByDate(DateTime date)
         {
             return _context.Order.Where(o => o.TentativeDeliveryDate.HasValue && o.TentativeDeliveryDate == date).ToList();
@@ -40,6 +45,8 @@ namespace DAL.Repositories
                 orderToEdit.ClientPhone = order.ClientPhone;
                 orderToEdit.TentativeDeliveryDate = order.TentativeDeliveryDate;
                 orderToEdit.ClientInstagram = order.ClientInstagram;
+                orderToEdit.Notes = order.Notes;
+                orderToEdit.DeliveryMethod = order.DeliveryMethod;
 
                 var ordersDetail = GetOrderDetailByOrderId(order.Id);
                

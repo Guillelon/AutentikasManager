@@ -84,6 +84,14 @@
     <Compile Include="Migrations\202006141902053_AddingInstagramToOrder.designer.cs">
       <DependentUpon>202006141902053_AddingInstagramToOrder.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202006142058533_AddingNotesAndDeliveryMethod.cs" />
+    <Compile Include="Migrations\202006142058533_AddingNotesAndDeliveryMethod.designer.cs">
+      <DependentUpon>202006142058533_AddingNotesAndDeliveryMethod.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006142234180_AddingActiveToPackage.cs" />
+    <Compile Include="Migrations\202006142234180_AddingActiveToPackage.designer.cs">
+      <DependentUpon>202006142234180_AddingActiveToPackage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\autentikasDBContext.cs" />
     <Compile Include="Models\Cookie.cs" />
@@ -122,6 +130,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202006141902053_AddingInstagramToOrder.resx">
       <DependentUpon>202006141902053_AddingInstagramToOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006142058533_AddingNotesAndDeliveryMethod.resx">
+      <DependentUpon>202006142058533_AddingNotesAndDeliveryMethod.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006142234180_AddingActiveToPackage.resx">
+      <DependentUpon>202006142234180_AddingActiveToPackage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

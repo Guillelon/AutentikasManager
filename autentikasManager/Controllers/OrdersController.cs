@@ -27,7 +27,7 @@ namespace autentikasManager.Controllers
 
         public string GetData()
         {
-            var orders = _repo.GetAll();
+            var orders = _repo.GetPending();
             return new JavaScriptSerializer().Serialize(orders);
         }
 

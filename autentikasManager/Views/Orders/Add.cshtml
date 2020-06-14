@@ -21,9 +21,9 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group form-group-feedback form-group-feedback-left">
-                                <input data-bind="value: ClientPhone" class="form-control" placeholder="Teléfono" />
+                                <input data-bind="value: ClientInstagram" class="form-control" placeholder="Instagram" />
                                 <div class="form-control-feedback">
-                                    <i class="icon-phone text-muted"></i>
+                                    <i class="icon-instagram text-muted"></i>
                                 </div>
                             </div>
                         </div>
@@ -39,9 +39,9 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group form-group-feedback form-group-feedback-left">
-                                <input data-bind="value: TentativeDeliveryDate" data-date-format="dd/mm/yyyy" class="datepicker form-control" placeholder="Fecha de entrega" />
+                                <input data-bind="value: ClientPhone" class="form-control" placeholder="Teléfono" />
                                 <div class="form-control-feedback">
-                                    <i class="icon-calendar text-muted"></i>
+                                    <i class="icon-phone text-muted"></i>
                                 </div>
                             </div>
                         </div>
@@ -49,12 +49,25 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group form-group-feedback form-group-feedback-left">
-                                <input data-bind="value: ClientInstagram" class="form-control" placeholder="Instagram" />
+                                <input data-bind="value: TentativeDeliveryDate" data-date-format="dd/mm/yyyy" class="datepicker form-control" placeholder="Fecha de entrega" />
                                 <div class="form-control-feedback">
-                                    <i class="icon-instagram text-muted"></i>
+                                    <i class="icon-calendar text-muted"></i>
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-group-feedback form-group-feedback-left">
+                                <select class="form-control" data-bind="value: DeliveryMethod">
+                                    <option>Delivery</option>
+                                    <option>Pickup</option>
+                                </select>
+                                <div class="form-control-feedback">
+                                    <i class="icon-bike text-muted"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="form-group form-group-feedback form-group-feedback-left">
                                 <select class="form-control" data-bind="value: PaymentMethod">
@@ -64,6 +77,14 @@
                                 </select>
                                 <div class="form-control-feedback">
                                     <i class="icon-credit-card text-muted"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-group-feedback form-group-feedback-left">
+                                <input data-bind="value: Notes" class="form-control" placeholder="Notas" />
+                                <div class="form-control-feedback">
+                                    <i class="icon-pencil text-muted"></i>
                                 </div>
                             </div>
                         </div>
@@ -98,16 +119,16 @@
                             <div data-bind="visible: SelectedQuantityNeeded() > 0">
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <small>Kookies</small>
+                                        <small>Kookie</small>
                                         <input data-bind="value: KookiesSelected" type="number" class="form-control" />
-                                    </div>
-                                    <div class="col-md-3">
-                                        <small>Kakao</small>
-                                        <input data-bind="value: KakaoSelected" type="number" class="form-control" />
                                     </div>
                                     <div class="col-md-3">
                                         <small>Kanela</small>
                                         <input data-bind="value: KanelaSelected" type="number" class="form-control" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <small>Kakao</small>
+                                        <input data-bind="value: KakaoSelected" type="number" class="form-control" />
                                     </div>
                                     <div class="col-md-3">
                                         <div style="text-align:center">
@@ -258,6 +279,8 @@
             self.ClientInstagram = ko.observable();
             self.PaymentMethod = ko.observable();
             self.TentativeDeliveryDate = ko.observable();
+            self.Notes = ko.observable();
+            self.DeliveryMethod = ko.observable();
 
             $('.datepicker').datepicker({
             });
@@ -344,6 +367,8 @@
                 order.PaymentMethod = self.PaymentMethod();
                 order.ClientInstagram = self.ClientInstagram();
                 order.TentativeDeliveryDate = self.TentativeDeliveryDate();
+                order.DeliveryMethod = self.DeliveryMethod();
+                order.Notes = self.Notes();
                 url = '/Orders/Process';
                 $.ajax({
                     url: url,
@@ -369,6 +394,9 @@
                         self.PaymentMethod(data.PaymentMethod);
                         self.ClientInstagram(data.ClientInstagram);
                         self.TentativeDeliveryDate(data.TentativeDeliveryDateFormatted);
+                        self.Notes(data.Notes);
+                        self.DeliveryMethod(data.DeliveryMethod);
+
                         for (var i = 0; i < data.OrderDetails.length; i++) {
                             var detail = data.OrderDetails[i];
                             self.OrderDetails.push(new Detail(detail.Package.Name, detail.PackageId,

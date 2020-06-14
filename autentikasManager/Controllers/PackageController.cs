@@ -21,7 +21,7 @@ namespace autentikasManager.Controllers
 
         public string GetPackages()
         {
-            var packages = packageRepository.GetAll();
+            var packages = packageRepository.GetActive();
             return new JavaScriptSerializer().Serialize(packages);
         }
 
@@ -43,6 +43,15 @@ namespace autentikasManager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Package package)
         {
+            packageRepository.Edit(package);
+            TempData["SuccessMessage"] = "Se editó con éxito el paquete";
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Activate(int id)
+        {
+            var package = packageRepository.GetById(id);
+            package.Activate();
             packageRepository.Edit(package);
             TempData["SuccessMessage"] = "Se editó con éxito el paquete";
             return RedirectToAction("Index");

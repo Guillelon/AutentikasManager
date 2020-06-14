@@ -11,6 +11,9 @@
                     @Html.HiddenFor(p => p.Description)
                     @Html.HiddenFor(p => p.Id)
                     @Html.HiddenFor(p => p.CookiesQuantity)
+                    @Html.HiddenFor(p => p.Active)
+                    @Html.HiddenFor(p => p.ActiveDate)
+                    @Html.HiddenFor(p => p.DeactiveDate)
                     <small>Nombre</small>
                     <div class="form-group form-group-feedback form-group-feedback-left">
                         @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
@@ -24,7 +27,7 @@
 
                             <small>Costo</small>
                             <div class="form-group form-group-feedback form-group-feedback-left">
-                                @Html.TextBoxFor(m => m.Cost, new { @class = "form-control", @type = "number", @step=".01" })
+                                @Html.TextBoxFor(m => m.Cost, new { @class = "form-control", @type = "number", @step = ".01" })
                                 <div class="form-control-feedback">
                                     <i class="icon-coin-dollar text-muted"></i>
                                 </div>
@@ -33,7 +36,7 @@
                         <div class="col-md-6">
                             <small>Precio</small>
                             <div class="form-group form-group-feedback form-group-feedback-left">
-                                @Html.TextBoxFor(m => m.Price, new { @class = "form-control", @type = "number", @step=".01"  })
+                                @Html.TextBoxFor(m => m.Price, new { @class = "form-control", @type = "number", @step = ".01" })
                                 <div class="form-control-feedback">
                                     <i class="icon-coin-dollar text-muted"></i>
                                 </div>

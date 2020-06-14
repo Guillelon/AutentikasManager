@@ -21,6 +21,11 @@ namespace DAL.Repositories
             return _context.Package.ToList();
         }
 
+        public IList<Package> GetActive()
+        {
+            return _context.Package.Where(p => p.Active).ToList();
+        }
+
         public Package GetById(int id)
         {
             return _context.Package.Where(p => p.Id == id).FirstOrDefault();

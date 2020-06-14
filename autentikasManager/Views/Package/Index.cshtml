@@ -32,6 +32,15 @@
                 {
                     <tr>
                         <td>
+                            @if (package.Active)
+                            {
+                                <i class="icon-alarm-check"></i>
+                            }
+                            else
+                            {
+                                <i class="icon-alarm-cancel"></i>
+                            }
+
                             @package.Name
                         </td>
                         <td>
@@ -52,6 +61,15 @@
                                     <a href="#" class="list-icons-item dropdown-toggle caret-0" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i></a>
                                     <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-164px, 19px, 0px);">
                                         <a href="/Package/Edit/@package.Id" class="dropdown-item"><i class="icon-pencil"></i> Editar</a>
+                                        @if (package.Active)
+                                        {
+                                            <a href="/Package/Activate/@package.Id" class="dropdown-item"><i class="icon-warning"></i> Desactivar</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="/Package/Activate/@package.Id" class="dropdown-item"><i class="icon-warning"></i> Activar</a>
+                                        }
+
                                     </div>
                                 </div>
                             </div>

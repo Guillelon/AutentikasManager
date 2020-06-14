@@ -29,15 +29,12 @@
                     <h5> Total Pago: <text data-bind="text: TotalPay().formatMoney(2)"></text> | Total Ganancia: <text data-bind="text: TotalProfit().formatMoney(2)"> </text> </h5>
                 </div>
             </div>
-            
+
             <table style="margin-top: 25px; font-size: medium" class="table table-bordered">
                 <thead>
                     <tr>
                         <th>
                             Información del cliente
-                        </th>
-                        <th>
-                            Fecha de entrega
                         </th>
                         <th>
                             Detalles del pedido
@@ -51,11 +48,21 @@
                 <tbody data-bind="foreach: Orders">
                     <tr>
                         <td>
-                            <span data-bind="visible: $data.Prepared" class="badge bg-blue badge-pill"><i class="icon-box"></i></span>
-                            <span data-bind="visible: $data.Delivered" class="badge bg-blue badge-pill"><i class="icon-bike"></i></span>
-                            <span data-bind="visible: $data.Paid" class="badge bg-blue badge-pill"><i class="icon-coin-dollar"></i></span>
-                            <br />
-                            <i class="icon-user text-muted"></i> <text data-bind="text: $data.ClientName"></text>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <span data-bind="visible: $data.Prepared" class="badge bg-orange-600 badge-pill"><i class="icon-box"></i></span>
+                                    <span data-bind="visible: !$data.Prepared" class="badge bg-grey badge-pill"><i class="icon-box"></i></span>
+                                    <span data-bind="visible: $data.Delivered" class="badge bg-orange-600 badge-pill"><i class="icon-bike"></i></span>
+                                    <span data-bind="visible: !$data.Delivered" class="badge bg-grey badge-pill"><i class="icon-bike"></i></span>
+                                    <span data-bind="visible: $data.Paid" class="badge bg-orange-600 badge-pill"><i class="icon-coin-dollar"></i></span>
+                                    <span data-bind="visible: !$data.Paid" class="badge bg-grey badge-pill"><i class="icon-coin-dollar"></i></span>
+                                </div>
+                                <div class="col-md-6" style="text-align:right">
+                                    <strong data-bind="text: $data.TentativeDeliveryDateFormattedLong"></strong>
+                                </div>
+                            </div>
+
+                            <i class="icon-user text-muted"></i> <strong data-bind="text: $data.ClientName"></strong>
                             <span>&nbsp;&nbsp;</span>
                             <i class="icon-phone text-muted"></i> <text data-bind="text: $data.ClientPhone"></text>
                             <br />
@@ -63,25 +70,27 @@
                             <span>&nbsp;&nbsp;</span>
                             <i class="icon-instagram text-muted"></i> <text data-bind="text: $data.ClientInstagram"></text>
                             <br />
-                            <i class="icon-mailbox text-muted"></i> <text data-bind="text: $data.ClientAddress"></text>
+                            <i class="icon-mailbox text-muted"></i> <strong data-bind="text: $data.ClientAddress"></strong>
                             <br />
                             <i class="icon-credit-card text-muted"></i> <text data-bind="text: $data.PaymentMethod"></text>
-                        </td>
-                        <td>
-                            <text data-bind="text: $data.TentativeDeliveryDateFormattedLong"></text>
+                            <span>&nbsp;&nbsp;</span>
+                            <i class="icon-bike text-muted"></i> <strong data-bind="text: $data.DeliveryMethod"></strong>
+                            <span>&nbsp;&nbsp;</span>
+                            <i class="icon-pencil text-muted"></i> <text data-bind="text: $data.Notes"></text>
                         </td>
                         <td>
                             <table style="border-color:white; border: 0px">
                                 <tbody data-bind="foreach: $data.OrderDetails">
-                                    <tr style="border: 0px">
+                                    <tr style="border: 0px;">
                                         <td style="padding:0px; padding-right:10px;border: 0px">
-                                            <text data-bind="text: $data.Package.Name"></text>
+                                            
                                         </td>
                                         <td style="padding:0px;border: 0px">
+                                            <text data-bind="text: $data.Package.Name"></text>
                                             <div data-bind="visible: $data.Package.CookiesQuantity > 0">
-                                                <span class="badge" style="background-color:#6C4E4C; color:white">Kookie: <text data-bind="text: $data.KookieCount"></text></span>
-                                                <span class="badge" style="background-color:#D99C59">Kanela: <text data-bind="text: $data.KanelaCount"></text></span>
-                                                <span class="badge" style="background-color:#4F2F2D; color:white">Kakao: <text data-bind="text: $data.KakaoCount"></text></span>
+                                                <span class="badge" style="background-color:#6C4E4C; color:white; font-size:15px;">Kookie: <text data-bind="text: $data.KookieCount"></text></span>
+                                                <span class="badge" style="background-color:#D99C59; font-size:15px">Kanela: <text data-bind="text: $data.KanelaCount"></text></span>
+                                                <span class="badge" style="background-color:#4F2F2D; color:white; font-size:15px">Kakao: <text data-bind="text: $data.KakaoCount"></text></span>
                                             </div>
                                         </td>
                                     </tr>
@@ -89,13 +98,13 @@
                             </table>
                             <br />
                             <div style="text-align:center">
-                                <span class="badge bg-blue"><text data-bind="text: $data.TotalCookiesCount"></text> Galletas</span>
+                                <span style="font-size:15px" class="badge bg-blue"><text data-bind="text: $data.TotalCookiesCount"></text> Galletas</span>
                             </div>
                         </td>
                         <td>
-                            <span class="badge bg-danger-300">Costo: <text data-bind="text: $data.TotalCost.formatMoney(2)"></text> </span><br />
-                            <span class="badge bg-success-300" style="color:white">Precio: <text data-bind="text: $data.TotalPrice.formatMoney(2)"></text> </span><br />
-                            <span class="badge bg-success-300" style="color:white"><strong>Ganancia: <text data-bind="text: $data.Profit.formatMoney(2)"></text> </strong></span>
+                            <span style="font-size:15px" class="badge bg-danger-300">Costo: <text data-bind="text: $data.TotalCost.formatMoney(2)"></text> </span><br />
+                            <span style="font-size:15px;color:white" class="badge bg-success-300" >Precio: <text data-bind="text: $data.TotalPrice.formatMoney(2)"></text> </span><br />
+                            <span style="font-size:15px;color:white" class="badge bg-success-300" ><strong>Ganancia: <text data-bind="text: $data.Profit.formatMoney(2)"></text> </strong></span>
                         </td>
                         <td class="text-center">
                             <div class="list-icons">
@@ -147,7 +156,7 @@
                     var order = self.Orders()[i];
                     for (var j = 0; j < order.OrderDetails.length; j++) {
                         var orderDetail = order.OrderDetails[j];
-                        cookieTotal = cookieTotal + orderDetail.KakaoCount + orderDetail.KanelaCount + orderDetail.KookieCount;                        
+                        cookieTotal = cookieTotal + orderDetail.KakaoCount + orderDetail.KanelaCount + orderDetail.KookieCount;
                     }
                 }
                 return cookieTotal;
