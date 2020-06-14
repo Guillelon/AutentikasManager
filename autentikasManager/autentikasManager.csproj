@@ -218,6 +218,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\Logo.png" />
     <Content Include="Images\LogoAlt.png" />
+    <Content Include="Images\toFavIcon.ico" />
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\auto-complete.min.js" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
