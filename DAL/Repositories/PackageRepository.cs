@@ -20,5 +20,17 @@ namespace DAL.Repositories
         {
             return _context.Package.ToList();
         }
+
+        public Package GetById(int id)
+        {
+            return _context.Package.Where(p => p.Id == id).FirstOrDefault();
+        }
+
+        public Package Edit(Package package)
+        {
+            _context.Entry(package).State = System.Data.Entity.EntityState.Modified;
+            _context.SaveChanges();
+            return package;
+        }
     }
 }

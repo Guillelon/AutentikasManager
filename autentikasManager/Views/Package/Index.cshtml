@@ -1,0 +1,64 @@
+﻿@model IList<DAL.Models.Package>
+
+<div class="card">
+    <div class="card-body">
+        @if(ViewBag.SuccessMessage != null)
+        {
+            <div class="alert alert-success" role="alert">@ViewBag.SuccessMessage</div>
+        }
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        Nombre
+                    </th>
+                    <th>
+                        Descripción
+                    </th>
+                    <th>
+                        Cantidad de galletas
+                    </th>
+                    <th>
+                        Costo
+                    </th>
+                    <th>
+                        Precio
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var package in Model)
+                {
+                    <tr>
+                        <td>
+                            @package.Name
+                        </td>
+                        <td>
+                            @package.Description
+                        </td>
+                        <td>
+                            @package.CookiesQuantity
+                        </td>
+                        <td>
+                            @string.Format("{0:C}", package.Cost)
+                        </td>
+                        <td>
+                            @string.Format("{0:C}", package.Price)
+                        </td>
+                        <td style="text-align:center"> 
+                            <div class="list-icons">
+                                <div class="dropdown">
+                                    <a href="#" class="list-icons-item dropdown-toggle caret-0" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-164px, 19px, 0px);">
+                                        <a href="/Package/Edit/@package.Id" class="dropdown-item"><i class="icon-pencil"></i> Editar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

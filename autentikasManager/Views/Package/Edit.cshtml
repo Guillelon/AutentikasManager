@@ -1,0 +1,52 @@
+﻿@model DAL.Models.Package
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                @using (Html.BeginForm("Edit", "Package", null, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    @Html.HiddenFor(p => p.Description)
+                    @Html.HiddenFor(p => p.Id)
+                    @Html.HiddenFor(p => p.CookiesQuantity)
+                    <small>Nombre</small>
+                    <div class="form-group form-group-feedback form-group-feedback-left">
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                        <div class="form-control-feedback">
+                            <i class="icon-package text-muted"></i>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+
+                            <small>Costo</small>
+                            <div class="form-group form-group-feedback form-group-feedback-left">
+                                @Html.TextBoxFor(m => m.Cost, new { @class = "form-control", @type = "number", @step=".01" })
+                                <div class="form-control-feedback">
+                                    <i class="icon-coin-dollar text-muted"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <small>Precio</small>
+                            <div class="form-group form-group-feedback form-group-feedback-left">
+                                @Html.TextBoxFor(m => m.Price, new { @class = "form-control", @type = "number", @step=".01"  })
+                                <div class="form-control-feedback">
+                                    <i class="icon-coin-dollar text-muted"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block">Aceptar<i class="icon-circle-right2 ml-2"></i></button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4"></div>
+</div>
