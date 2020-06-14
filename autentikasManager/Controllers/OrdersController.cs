@@ -31,6 +31,12 @@ namespace autentikasManager.Controllers
             return new JavaScriptSerializer().Serialize(orders);
         }
 
+        public string GetDataByDate(DateTime date)
+        {
+            var orders = _repo.GetByDate(date);
+            return new JavaScriptSerializer().Serialize(orders);
+        }
+
         public ActionResult Add()
         {
             return View();

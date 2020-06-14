@@ -49,9 +49,9 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group form-group-feedback form-group-feedback-left">
-                                <input data-bind="value: ClientAddress" class="form-control" placeholder="Dirección" />
+                                <input data-bind="value: ClientInstagram" class="form-control" placeholder="Instagram" />
                                 <div class="form-control-feedback">
-                                    <i class="icon-mailbox text-muted"></i>
+                                    <i class="icon-instagram text-muted"></i>
                                 </div>
                             </div>
                         </div>
@@ -60,9 +60,20 @@
                                 <select class="form-control" data-bind="value: PaymentMethod">
                                     <option>Efectivo</option>
                                     <option>Transferencia</option>
+                                    <option>Bizum</option>
                                 </select>
                                 <div class="form-control-feedback">
                                     <i class="icon-credit-card text-muted"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group form-group-feedback form-group-feedback-left">
+                                <input data-bind="value: ClientAddress" class="form-control" placeholder="Dirección" />
+                                <div class="form-control-feedback">
+                                    <i class="icon-mailbox text-muted"></i>
                                 </div>
                             </div>
                         </div>
@@ -244,6 +255,7 @@
             self.ClientPhone = ko.observable();
             self.ClientAddress = ko.observable();
             self.ClientEmail = ko.observable();
+            self.ClientInstagram = ko.observable();
             self.PaymentMethod = ko.observable();
             self.TentativeDeliveryDate = ko.observable();
 
@@ -331,6 +343,7 @@
                 order.ClientEmail = self.ClientEmail();
                 order.OrderDetails = self.OrderDetails();
                 order.PaymentMethod = self.PaymentMethod();
+                order.ClientInstagram = self.ClientInstagram();
                 order.TentativeDeliveryDate = self.TentativeDeliveryDate();
                 url = '/Orders/Process';
                 $.ajax({
@@ -355,6 +368,7 @@
                         self.ClientAddress(data.ClientAddress);
                         self.ClientEmail(data.ClientEmail);
                         self.PaymentMethod(data.PaymentMethod);
+                        self.ClientInstagram(data.ClientInstagram);
                         self.TentativeDeliveryDate(data.TentativeDeliveryDateFormatted);
                         for (var i = 0; i < data.OrderDetails.length; i++) {
                             var detail = data.OrderDetails[i];

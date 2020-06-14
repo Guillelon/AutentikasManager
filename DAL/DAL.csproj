@@ -80,6 +80,10 @@
     <Compile Include="Migrations\202006130430118_AddingPaymentMethodToorder.designer.cs">
       <DependentUpon>202006130430118_AddingPaymentMethodToorder.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202006141902053_AddingInstagramToOrder.cs" />
+    <Compile Include="Migrations\202006141902053_AddingInstagramToOrder.designer.cs">
+      <DependentUpon>202006141902053_AddingInstagramToOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\autentikasDBContext.cs" />
     <Compile Include="Models\Cookie.cs" />
@@ -115,6 +119,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202006130430118_AddingPaymentMethodToorder.resx">
       <DependentUpon>202006130430118_AddingPaymentMethodToorder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006141902053_AddingInstagramToOrder.resx">
+      <DependentUpon>202006141902053_AddingInstagramToOrder.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -48,6 +48,7 @@ namespace DAL.Models
         public string ClientPhone { get; set; }
         public string ClientAddress { get; set; }
         public string ClientEmail { get; set; }
+        public string ClientInstagram { get; set; }
 
         public virtual IList<OrderDetail> OrderDetails { get; set; }
 

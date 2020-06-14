@@ -3,7 +3,33 @@
 <div id="OrdersHub">
     <div class="card" style="min-height: 100%">
         <div class="card-body">
-            <a href="/Orders/Add" class="btn btn-lg btn-info">Crear Orden</a>
+            <div class="row">
+                <div class="col-md-2">
+                    <a href="/Orders/Add" class="btn btn-lg btn-info">Crear Orden</a>
+                </div>
+                <div class="col-md-4" style="padding-top:5px">
+                    <div class="form-group form-group-feedback form-group-feedback-left">
+                        <input class="form-control datepicker" data-bind="value: DateToSearch" data-date-format="dd/mm/yyyy" placeholder="Buscar por fecha" />
+                        <div class="form-control-feedback">
+                            <i class="icon-calendar text-muted"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1" style="padding-top:5px">
+                    <button class="btn btn-info"><i class="icon-search4" data-bind="click: GetData"></i></button>
+                </div>
+            </div>
+
+            <hr />
+            <div class="row">
+                <div class="col-md-6" style="text-align:left">
+                    <h5>Total Pedidos: <text data-bind="text: Orders().length"></text> | Total Galletas: <text data-bind="text: CookieTotal"></text></h5>
+                </div>
+                <div class="col-md-6" style="text-align:right">
+                    <h5> Total Pago: <text data-bind="text: TotalPay().formatMoney(2)"></text> | Total Ganancia: <text data-bind="text: TotalProfit().formatMoney(2)"> </text> </h5>
+                </div>
+            </div>
+            
             <table style="margin-top: 25px; font-size: medium" class="table table-bordered">
                 <thead>
                     <tr>
@@ -34,6 +60,8 @@
                             <i class="icon-phone text-muted"></i> <text data-bind="text: $data.ClientPhone"></text>
                             <br />
                             <i class="icon-envelop text-muted"></i> <text data-bind="text: $data.ClientEmail"></text>
+                            <span>&nbsp;&nbsp;</span>
+                            <i class="icon-instagram text-muted"></i> <text data-bind="text: $data.ClientInstagram"></text>
                             <br />
                             <i class="icon-mailbox text-muted"></i> <text data-bind="text: $data.ClientAddress"></text>
                             <br />
@@ -92,24 +120,18 @@
 </div>
 
 <script>
-    $('.delete').click(function () {
-        var r = confirm("Está seguro que desea borrar la orden?");
-        if (r == true) {
-            window.location.replace($(this).attr('id'));
-        }
-    })
-
-    $('.changeStatus').click(function () {
-        window.location.replace($(this).attr('id'));
-    })
-
     $(document).ready(function () {
         function ViewModel() {
             var self = this;
             self.Orders = ko.observableArray();
+            self.DateToSearch = ko.observable();
             self.GetData = function () {
+                var url = '/Orders/GetData/';
+                if (self.DateToSearch() != null && self.DateToSearch().length > 0) {
+                    url = '/Orders/GetDataByDate?date=' + self.DateToSearch();
+                }
                 $.ajax({
-                    url: '/Orders/GetData/',
+                    url: url,
                     type: 'GET',
                     dataType: 'json',
                     success: function (data) {
@@ -118,6 +140,38 @@
                     }
                 });
             }
+
+            self.CookieTotal = ko.computed(function () {
+                var cookieTotal = 0;
+                for (var i = 0; i < self.Orders().length; i++) {
+                    var order = self.Orders()[i];
+                    for (var j = 0; j < order.OrderDetails.length; j++) {
+                        var orderDetail = order.OrderDetails[j];
+                        cookieTotal = cookieTotal + orderDetail.KakaoCount + orderDetail.KanelaCount + orderDetail.KookieCount;                        
+                    }
+                }
+                return cookieTotal;
+            })
+
+            self.TotalPay = ko.computed(function () {
+                var totalPay = 0;
+                for (var i = 0; i < self.Orders().length; i++) {
+                    var order = self.Orders()[i];
+                    console.log(order);
+                    totalPay = totalPay + parseFloat(order.TotalPrice);
+                    console.log(totalPay);
+                }
+                return totalPay;
+            })
+
+            self.TotalProfit = ko.computed(function () {
+                var totalProfit = 0;
+                for (var i = 0; i < self.Orders().length; i++) {
+                    var order = self.Orders()[i];
+                    totalProfit = totalProfit + (parseFloat(order.TotalPrice) - parseFloat(order.TotalCost));
+                }
+                return totalProfit;
+            })
 
             self.Pack = function (order) {
                 $.ajax({
@@ -169,6 +223,9 @@
                     });
                 }
             }
+
+            $('.datepicker').datepicker({
+            });
         }
 
         var viewModel = new ViewModel();

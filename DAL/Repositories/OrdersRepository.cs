@@ -22,6 +22,11 @@ namespace DAL.Repositories
             return _context.Order.ToList();
         }
 
+        public IList<Order> GetByDate(DateTime date)
+        {
+            return _context.Order.Where(o => o.TentativeDeliveryDate.HasValue && o.TentativeDeliveryDate == date).ToList();
+        }
+
         public Order AddOrEdit(Order order)
         {
             if(order.Id > 0)
@@ -34,6 +39,7 @@ namespace DAL.Repositories
                 orderToEdit.PaymentMethod = order.PaymentMethod;
                 orderToEdit.ClientPhone = order.ClientPhone;
                 orderToEdit.TentativeDeliveryDate = order.TentativeDeliveryDate;
+                orderToEdit.ClientInstagram = order.ClientInstagram;
 
                 var ordersDetail = GetOrderDetailByOrderId(order.Id);
                
