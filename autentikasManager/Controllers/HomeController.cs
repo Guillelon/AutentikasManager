@@ -24,9 +24,9 @@ namespace autentikasManager.Controllers
             viewModel.DatesInfo = ordersRepository.GetNextDeliveryDatesInfo();
             viewModel.PendingOrders = ordersRepository.PendingOrders();
             var dto = ordersRepository.GetCookiesCounts();
-            viewModel.KakaoCount = dto.KakaoCount;
-            viewModel.KanelaCount = dto.KanelaCount;
-            viewModel.KookieCount = dto.KookieCount;
+            viewModel.KakaoCount = dto.KakaoCount.HasValue ? dto.KakaoCount.Value : 0;
+            viewModel.KanelaCount = dto.KanelaCount.HasValue ? dto.KanelaCount.Value : 0;
+            viewModel.KookieCount = dto.KookieCount.HasValue ? dto.KookieCount.Value : 0;
             viewModel.PackageCount = ordersRepository.GetPackageCount();
             return View(viewModel);
         }

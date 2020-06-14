@@ -23,9 +23,9 @@ namespace DAL.DTOs
 
     public class CookiesCount
     {
-        public int KookieCount { get; set; }
-        public int KanelaCount { get; set; }
-        public int KakaoCount { get; set; }
+        public int? KookieCount { get; set; }
+        public int? KanelaCount { get; set; }
+        public int? KakaoCount { get; set; }
     }
 
     public class PackageCountDTO
