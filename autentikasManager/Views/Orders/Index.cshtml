@@ -178,7 +178,9 @@
                                           '&packaged=' + self.SearchPackaged() + 
                                           '&paid=' + self.SearchPaid();
                 if (self.DateToSearch() != null && self.DateToSearch().length > 0) {
-                    url = '/Orders/GetDataByDate?date=' + self.DateToSearch();
+                    url = '/Orders/GetDataByDate?date=' + self.DateToSearch() + '&delivered=' + self.SearchDelivered() +
+                                          '&packaged=' + self.SearchPackaged() + 
+                                          '&paid=' + self.SearchPaid();; 
                 }
                 $.ajax({
                     url: url,
