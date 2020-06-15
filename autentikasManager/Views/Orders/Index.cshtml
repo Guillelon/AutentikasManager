@@ -7,7 +7,7 @@
                 <div class="col-md-2">
                     <a href="/Orders/Add" class="btn btn-lg btn-info">Crear Orden</a>
                 </div>
-                <div class="col-md-4" style="padding-top:5px">
+                <div class="col-md-2" style="padding-top:5px">
                     <div class="form-group form-group-feedback form-group-feedback-left">
                         <input class="form-control datepicker" data-bind="value: DateToSearch" data-date-format="dd/mm/yyyy" placeholder="Buscar por fecha" />
                         <div class="form-control-feedback">
@@ -15,115 +15,128 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-1" style="padding-top:5px">
-                    <button class="btn btn-info"><i class="icon-search4" data-bind="click: GetData"></i></button>
+                <div class="col-md-2" style="padding-top:10px">
+                    <span data-bind="visible: SearchPackaged, click: ActionPackaged" class="badge bg-orange-600 badge-pill"><i class="icon-box"></i></span>
+                    <span data-bind="visible: !SearchPackaged(), click: ActionPackaged" class="badge bg-grey badge-pill"><i class="icon-box"></i></span>
+                    <span data-bind="visible: SearchDelivered, click: ActionDelivered" class="badge bg-orange-600 badge-pill"><i class="icon-bike"></i></span>
+                    <span data-bind="visible: !SearchDelivered(), click: ActionDelivered" class="badge bg-grey badge-pill"><i class="icon-bike"></i></span>
+                    <span data-bind="visible: SearchPaid, click: ActionPaid" class="badge bg-orange-600 badge-pill"><i class="icon-coin-dollar"></i></span>
+                    <span data-bind="visible: !SearchPaid(), click: ActionPaid" class="badge bg-grey badge-pill"><i class="icon-coin-dollar"></i></span>
                 </div>
             </div>
-
-            <hr />
-            <div class="row">
-                <div class="col-md-6" style="text-align:left">
-                    <h5>Total Pedidos: <text data-bind="text: Orders().length"></text> | Total Galletas: <text data-bind="text: CookieTotal"></text></h5>
-                </div>
-                <div class="col-md-6" style="text-align:right">
-                    <h5> Total Pago: <text data-bind="text: TotalPay().formatMoney(2)"></text> | Total Ganancia: <text data-bind="text: TotalProfit().formatMoney(2)"> </text> </h5>
-                </div>
+        </div>
+        <hr />
+        <div>
+            <div data-bind="visible: Loading()" style="text-align:center; padding-top:55px; padding-bottom:55px">
+                <img src="~/Images/bigLoading.gif" width="125" />
             </div>
+            <div data-bind="visible: !Loading()">
+                <div class="row" style="padding-left: 25px; padding-right:25px">
+                    <div class="col-md-6" style="text-align:left">
+                        <h5>Total Pedidos: <text data-bind="text: Orders().length"></text> | Total Galletas: <text data-bind="text: CookieTotal"></text></h5>
+                    </div>
+                    <div class="col-md-6" style="text-align:right">
+                        <h5> Total Pagos: <text data-bind="text: TotalPay().formatMoney(2)"></text> | Total Ganancia: <text data-bind="text: TotalProfit().formatMoney(2)"> </text> </h5>
+                    </div>
+                    <div class="col-md-12">
 
-            <table style="margin-top: 25px; font-size: medium" class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>
-                            Información del cliente
-                        </th>
-                        <th>
-                            Detalles del pedido
-                        </th>
-                        <th>
-                            Money Talk
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody data-bind="foreach: Orders">
-                    <tr>
-                        <td>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <span data-bind="visible: $data.Prepared" class="badge bg-orange-600 badge-pill"><i class="icon-box"></i></span>
-                                    <span data-bind="visible: !$data.Prepared" class="badge bg-grey badge-pill"><i class="icon-box"></i></span>
-                                    <span data-bind="visible: $data.Delivered" class="badge bg-orange-600 badge-pill"><i class="icon-bike"></i></span>
-                                    <span data-bind="visible: !$data.Delivered" class="badge bg-grey badge-pill"><i class="icon-bike"></i></span>
-                                    <span data-bind="visible: $data.Paid" class="badge bg-orange-600 badge-pill"><i class="icon-coin-dollar"></i></span>
-                                    <span data-bind="visible: !$data.Paid" class="badge bg-grey badge-pill"><i class="icon-coin-dollar"></i></span>
-                                </div>
-                                <div class="col-md-6" style="text-align:right">
-                                    <strong data-bind="text: $data.TentativeDeliveryDateFormattedLong"></strong>
-                                </div>
-                            </div>
 
-                            <i class="icon-user text-muted"></i> <strong data-bind="text: $data.ClientName"></strong>
-                            <span>&nbsp;&nbsp;</span>
-                            <i class="icon-phone text-muted"></i> <text data-bind="text: $data.ClientPhone"></text>
-                            <br />
-                            <i class="icon-envelop text-muted"></i> <text data-bind="text: $data.ClientEmail"></text>
-                            <span>&nbsp;&nbsp;</span>
-                            <i class="icon-instagram text-muted"></i> <text data-bind="text: $data.ClientInstagram"></text>
-                            <br />
-                            <i class="icon-mailbox text-muted"></i> <strong data-bind="text: $data.ClientAddress"></strong>
-                            <br />
-                            <i class="icon-credit-card text-muted"></i> <text data-bind="text: $data.PaymentMethod"></text>
-                            <span>&nbsp;&nbsp;</span>
-                            <i class="icon-bike text-muted"></i> <strong data-bind="text: $data.DeliveryMethod"></strong>
-                            <span>&nbsp;&nbsp;</span>
-                            <i class="icon-pencil text-muted"></i> <text data-bind="text: $data.Notes"></text>
-                        </td>
-                        <td>
-                            <table style="border-color:white; border: 0px">
-                                <tbody data-bind="foreach: $data.OrderDetails">
-                                    <tr style="border: 0px;">
-                                        <td style="padding:0px; padding-right:10px;border: 0px">
-                                            
-                                        </td>
-                                        <td style="padding:0px;border: 0px">
-                                            <text data-bind="text: $data.Package.Name"></text>
-                                            <div data-bind="visible: $data.Package.CookiesQuantity > 0">
-                                                <span class="badge" style="background-color:#6C4E4C; color:white; font-size:15px;">Kookie: <text data-bind="text: $data.KookieCount"></text></span>
-                                                <span class="badge" style="background-color:#D99C59; font-size:15px">Kanela: <text data-bind="text: $data.KanelaCount"></text></span>
-                                                <span class="badge" style="background-color:#4F2F2D; color:white; font-size:15px">Kakao: <text data-bind="text: $data.KakaoCount"></text></span>
+                        <table style="margin-top: 25px; font-size: medium" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Información del cliente
+                                    </th>
+                                    <th>
+                                        Detalles del pedido
+                                    </th>
+                                    <th>
+                                        Money Talk
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody data-bind="foreach: Orders">
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <span data-bind="visible: $data.Prepared" class="badge bg-orange-600 badge-pill"><i class="icon-box"></i></span>
+                                                <span data-bind="visible: !$data.Prepared" class="badge bg-grey badge-pill"><i class="icon-box"></i></span>
+                                                <span data-bind="visible: $data.Delivered" class="badge bg-orange-600 badge-pill"><i class="icon-bike"></i></span>
+                                                <span data-bind="visible: !$data.Delivered" class="badge bg-grey badge-pill"><i class="icon-bike"></i></span>
+                                                <span data-bind="visible: $data.Paid" class="badge bg-orange-600 badge-pill"><i class="icon-coin-dollar"></i></span>
+                                                <span data-bind="visible: !$data.Paid" class="badge bg-grey badge-pill"><i class="icon-coin-dollar"></i></span>
                                             </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <br />
-                            <div style="text-align:center">
-                                <span style="font-size:15px" class="badge bg-blue"><text data-bind="text: $data.TotalCookiesCount"></text> Galletas</span>
-                            </div>
-                        </td>
-                        <td>
-                            <span style="font-size:15px" class="badge bg-danger-300">Costo: <text data-bind="text: $data.TotalCost.formatMoney(2)"></text> </span><br />
-                            <span style="font-size:15px;color:white" class="badge bg-success-300" >Precio: <text data-bind="text: $data.TotalPrice.formatMoney(2)"></text> </span><br />
-                            <span style="font-size:15px;color:white" class="badge bg-success-300" ><strong>Ganancia: <text data-bind="text: $data.Profit.formatMoney(2)"></text> </strong></span>
-                        </td>
-                        <td class="text-center">
-                            <div class="list-icons">
-                                <div class="dropdown">
-                                    <a href="#" class="list-icons-item dropdown-toggle caret-0" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i></a>
-                                    <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-164px, 19px, 0px);">
-                                        <a data-bind="click: $parent.Pack" href="#" class="dropdown-item changeStatus"><i class="icon-box"></i> Empaquetar</a>
-                                        <a data-bind="click: $parent.Deliver" href="#" class="dropdown-item changeStatus"><i class="icon-bike"></i> Entregar</a>
-                                        <a data-bind="click: $parent.Pay" href="#" class="dropdown-item changeStatus"><i class="icon-coin-dollar"></i> Pagar</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a data-bind="click: $parent.Edit" class="dropdown-item"><i class="icon-pencil"></i> Editar</a>
-                                        <a data-bind="click: $parent.Delete" href="#" class="dropdown-item delete"><i class="icon-trash"></i> Eliminar</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                                            <div class="col-md-6" style="text-align:right">
+                                                <strong data-bind="text: $data.TentativeDeliveryDateFormattedLong"></strong>
+                                            </div>
+                                        </div>
+
+                                        <i class="icon-user text-muted"></i> <strong data-bind="text: $data.ClientName"></strong>
+                                        <span>&nbsp;&nbsp;</span>
+                                        <i class="icon-phone text-muted"></i> <text data-bind="text: $data.ClientPhone"></text>
+                                        <br />
+                                        <i class="icon-envelop text-muted"></i> <text data-bind="text: $data.ClientEmail"></text>
+                                        <span>&nbsp;&nbsp;</span>
+                                        <i class="icon-instagram text-muted"></i> <text data-bind="text: $data.ClientInstagram"></text>
+                                        <br />
+                                        <i class="icon-mailbox text-muted"></i> <strong data-bind="text: $data.ClientAddress"></strong>
+                                        <br />
+                                        <i class="icon-credit-card text-muted"></i> <text data-bind="text: $data.PaymentMethod"></text>
+                                        <span>&nbsp;&nbsp;</span>
+                                        <i class="icon-bike text-muted"></i> <strong data-bind="text: $data.DeliveryMethod"></strong>
+                                        <span>&nbsp;&nbsp;</span>
+                                        <i class="icon-pencil text-muted"></i> <text data-bind="text: $data.Notes"></text>
+                                    </td>
+                                    <td>
+                                        <table style="border-color:white; border: 0px">
+                                            <tbody data-bind="foreach: $data.OrderDetails">
+                                                <tr style="border: 0px;">
+                                                    <td style="padding:0px; padding-right:10px;border: 0px">
+                                                    </td>
+                                                    <td style="padding:0px;border: 0px">
+                                                        <text data-bind="text: $data.Package.Name"></text>
+                                                        <div data-bind="visible: $data.Package.CookiesQuantity > 0">
+                                                            <span class="badge" style="background-color:#6C4E4C; color:white; font-size:15px;">Kookie: <text data-bind="text: $data.KookieCount"></text></span>
+                                                            <span class="badge" style="background-color:#D99C59; font-size:15px">Kanela: <text data-bind="text: $data.KanelaCount"></text></span>
+                                                            <span class="badge" style="background-color:#4F2F2D; color:white; font-size:15px">Kakao: <text data-bind="text: $data.KakaoCount"></text></span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <br />
+                                        <div style="text-align:center">
+                                            <span style="font-size:15px" class="badge bg-blue"><text data-bind="text: $data.TotalCookiesCount"></text> Galletas</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span style="font-size:15px" class="badge bg-danger-300">Costo: <text data-bind="text: $data.TotalCost.formatMoney(2)"></text> </span><br />
+                                        <span style="font-size:15px;color:white" class="badge bg-success-300">Precio: <text data-bind="text: $data.TotalPrice.formatMoney(2)"></text> </span><br />
+                                        <span style="font-size:15px;color:white" class="badge bg-success-300"><strong>Ganancia: <text data-bind="text: $data.Profit.formatMoney(2)"></text> </strong></span>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="list-icons">
+                                            <div class="dropdown">
+                                                <a href="#" class="list-icons-item dropdown-toggle caret-0" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-164px, 19px, 0px);">
+                                                    <a data-bind="click: $parent.Pack" href="#" class="dropdown-item changeStatus"><i class="icon-box"></i> Empaquetar</a>
+                                                    <a data-bind="click: $parent.Deliver" href="#" class="dropdown-item changeStatus"><i class="icon-bike"></i> Entregar</a>
+                                                    <a data-bind="click: $parent.Pay" href="#" class="dropdown-item changeStatus"><i class="icon-coin-dollar"></i> Pagar</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a data-bind="click: $parent.Edit" class="dropdown-item"><i class="icon-pencil"></i> Editar</a>
+                                                    <a data-bind="click: $parent.Delete" href="#" class="dropdown-item delete"><i class="icon-trash"></i> Eliminar</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -134,8 +147,36 @@
             var self = this;
             self.Orders = ko.observableArray();
             self.DateToSearch = ko.observable();
+            self.SearchPackaged = ko.observable(false);
+            self.SearchDelivered = ko.observable(false);
+            self.SearchPaid = ko.observable(false);
+
+            self.DateToSearch.subscribe(function () {
+                self.GetData();
+            });
+
+            self.ActionPackaged = function () {
+                self.SearchPackaged(!self.SearchPackaged());
+                self.GetData();
+            }
+
+            self.ActionDelivered = function () {
+                self.SearchDelivered(!self.SearchDelivered());
+                self.GetData();
+            }
+
+            self.ActionPaid = function () {
+                self.SearchPaid(!self.SearchPaid());
+                self.GetData();
+            }
+
+            self.Loading = ko.observable(true);
+
             self.GetData = function () {
-                var url = '/Orders/GetData/';
+                self.Loading(true);
+                var url = '/Orders/GetData/?delivered=' + self.SearchDelivered() +
+                                          '&packaged=' + self.SearchPackaged() + 
+                                          '&paid=' + self.SearchPaid();
                 if (self.DateToSearch() != null && self.DateToSearch().length > 0) {
                     url = '/Orders/GetDataByDate?date=' + self.DateToSearch();
                 }
@@ -146,6 +187,7 @@
                     success: function (data) {
                         self.Orders([]);
                         self.Orders(data);
+                        self.Loading(false);
                     }
                 });
             }

@@ -25,15 +25,15 @@ namespace autentikasManager.Controllers
             return View(orders);
         }
 
-        public string GetData()
+        public string GetData(bool delivered, bool packaged, bool paid)
         {
-            var orders = _repo.GetPending();
+            var orders = _repo.GetPending(delivered,packaged,paid);
             return new JavaScriptSerializer().Serialize(orders);
         }
 
-        public string GetDataByDate(DateTime date)
+        public string GetDataByDate(DateTime date, bool delivered, bool packaged, bool paid)
         {
-            var orders = _repo.GetByDate(date);
+            var orders = _repo.GetByDate(date, delivered, packaged, paid);
             return new JavaScriptSerializer().Serialize(orders);
         }
 

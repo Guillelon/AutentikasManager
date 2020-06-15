@@ -22,14 +22,20 @@ namespace DAL.Repositories
             return _context.Order.ToList();
         }
 
-        public IList<Order> GetPending()
+        public IList<Order> GetPending(bool delivered, bool packaged, bool paid)
         {
-            return _context.Order.Where(o => !o.Delivered || !o.Prepared || !o.Paid).OrderBy(o => o.TentativeDeliveryDate).ToList();
+            return _context.Order.Where(o => o.Delivered == delivered 
+                                          && o.Prepared == packaged 
+                                          && o.Paid == paid).OrderBy(o => o.TentativeDeliveryDate).ToList();
         }
 
-        public IList<Order> GetByDate(DateTime date)
+        public IList<Order> GetByDate(DateTime date, bool delivered, bool packaged, bool paid)
         {
-            return _context.Order.Where(o => o.TentativeDeliveryDate.HasValue && o.TentativeDeliveryDate == date).ToList();
+            return _context.Order.Where(o => o.TentativeDeliveryDate.HasValue && 
+                                             o.TentativeDeliveryDate == date
+                                          && o.Delivered == delivered
+                                          && o.Prepared == packaged
+                                          && o.Paid == paid).ToList();
         }
 
         public Order AddOrEdit(Order order)
