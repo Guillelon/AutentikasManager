@@ -85,6 +85,7 @@
                                         <span>&nbsp;&nbsp;</span>
                                         <i class="icon-bike text-muted"></i> <strong data-bind="text: $data.DeliveryMethod"></strong>
                                         <span>&nbsp;&nbsp;</span>
+                                        <br />
                                         <i class="icon-pencil text-muted"></i> <text data-bind="text: $data.Notes"></text>
                                     </td>
                                     <td>
@@ -94,11 +95,16 @@
                                                     <td style="padding:0px; padding-right:10px;border: 0px">
                                                     </td>
                                                     <td style="padding:0px;border: 0px">
-                                                        <text data-bind="text: $data.Package.Name"></text>
                                                         <div data-bind="visible: $data.Package.CookiesQuantity > 0">
-                                                            <span class="badge" style="background-color:#6C4E4C; color:white; font-size:15px;">Kookie: <text data-bind="text: $data.KookieCount"></text></span>
-                                                            <span class="badge" style="background-color:#D99C59; font-size:15px">Kanela: <text data-bind="text: $data.KanelaCount"></text></span>
-                                                            <span class="badge" style="background-color:#4F2F2D; color:white; font-size:15px">Kakao: <text data-bind="text: $data.KakaoCount"></text></span>
+                                                            <text data-bind="text: $data.Package.Name"></text>
+                                                            <div>
+                                                                <span class="badge" style="background-color:#6C4E4C; color:white; font-size:15px;">Kookie: <text data-bind="text: $data.KookieCount"></text></span>
+                                                                <span class="badge" style="background-color:#D99C59; font-size:15px">Kanela: <text data-bind="text: $data.KanelaCount"></text></span>
+                                                                <span class="badge" style="background-color:#4F2F2D; color:white; font-size:15px">Kakao: <text data-bind="text: $data.KakaoCount"></text></span>
+                                                            </div>
+                                                        </div>
+                                                        <div style="padding-top:5px" data-bind="visible: $data.Package.CookiesQuantity == 0">
+                                                            <span class="badge" style="background-color:#6C4E4C; color:white; font-size:15px;"><text data-bind="text: $data.Package.Name"></text></span>
                                                         </div>
                                                     </td>
                                                 </tr>
