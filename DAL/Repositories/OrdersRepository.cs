@@ -53,6 +53,8 @@ namespace DAL.Repositories
                 orderToEdit.ClientInstagram = order.ClientInstagram;
                 orderToEdit.Notes = order.Notes;
                 orderToEdit.DeliveryMethod = order.DeliveryMethod;
+                orderToEdit.TotalPrice = order.TotalPrice;
+                orderToEdit.TotalCost = order.TotalCost;
 
                 var ordersDetail = GetOrderDetailByOrderId(order.Id);
                
