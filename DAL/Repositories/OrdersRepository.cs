@@ -24,18 +24,27 @@ namespace DAL.Repositories
 
         public IList<Order> GetPending(bool delivered, bool packaged, bool paid)
         {
-            return _context.Order.Where(o => o.Delivered == delivered 
-                                          && o.Prepared == packaged 
-                                          && o.Paid == paid).OrderBy(o => o.TentativeDeliveryDate).ToList();
+            var orders = _context.Order.ToList();
+            if (delivered)
+                orders = orders.Where(o => o.Delivered == delivered).ToList();
+            if (packaged)
+                orders = orders.Where(o => o.Prepared == packaged).ToList();
+            if (paid)
+                orders = orders.Where(o => o.Paid == paid).ToList();
+            return orders.OrderBy(o => o.TentativeDeliveryDate).ToList();
         }
 
         public IList<Order> GetByDate(DateTime date, bool delivered, bool packaged, bool paid)
         {
-            return _context.Order.Where(o => o.TentativeDeliveryDate.HasValue && 
-                                             o.TentativeDeliveryDate == date
-                                          && o.Delivered == delivered
-                                          && o.Prepared == packaged
-                                          && o.Paid == paid).ToList();
+            var orders = _context.Order.Where(o => o.TentativeDeliveryDate.HasValue &&
+                                             o.TentativeDeliveryDate == date).ToList();
+            if (delivered)
+                orders = orders.Where(o => o.Delivered == delivered).ToList();
+            if (packaged)
+                orders = orders.Where(o => o.Prepared == packaged).ToList();
+            if (paid)
+                orders = orders.Where(o => o.Paid == paid).ToList();
+            return orders.OrderBy(o => o.TentativeDeliveryDate).ToList();
         }
 
         public Order AddOrEdit(Order order)

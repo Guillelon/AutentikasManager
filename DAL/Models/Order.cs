@@ -94,5 +94,15 @@ namespace DAL.Models
             Paid = !Paid;
             PayedDate = DateTime.Now;
         }
+
+        public void MarkAll()
+        {
+            Paid = true;
+            Prepared = true;
+            Delivered = true;
+            PayedDate = DateTime.Now;
+            PreparedDate = DateTime.Now;
+            DeliveredDate = DateTime.Now;
+        }
     }
 }

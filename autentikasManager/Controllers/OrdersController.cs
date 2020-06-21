@@ -91,5 +91,13 @@ namespace autentikasManager.Controllers
             _repo.SimpleEdit(order);
             return "200";
         }
+
+        public string MarkEverything(int id)
+        {
+            var order = _repo.Get(id);
+            order.MarkAll();
+            _repo.SimpleEdit(order);
+            return "200";
+        }
     }
 }

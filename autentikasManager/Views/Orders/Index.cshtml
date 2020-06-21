@@ -39,7 +39,7 @@
                         <h5> Total Pagos: <text data-bind="text: TotalPay().formatMoney(2)"></text> | Total Ganancia: <text data-bind="text: TotalProfit().formatMoney(2)"> </text> </h5>
                     </div>
                     <div class="col-md-12">
-                        <table style="margin-top: 25px; font-size: medium" class="table table-bordered">
+                        <table style="margin-top: 25px; margin-bottom:25px;font-size: medium" class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>
@@ -59,12 +59,12 @@
                                     <td width="45%">
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <span data-bind="visible: $data.Prepared" class="badge bg-orange-600 badge-pill"><i class="icon-box"></i></span>
-                                                <span data-bind="visible: !$data.Prepared" class="badge bg-grey badge-pill"><i class="icon-box"></i></span>
-                                                <span data-bind="visible: $data.Delivered" class="badge bg-orange-600 badge-pill"><i class="icon-bike"></i></span>
-                                                <span data-bind="visible: !$data.Delivered" class="badge bg-grey badge-pill"><i class="icon-bike"></i></span>
-                                                <span data-bind="visible: $data.Paid" class="badge bg-orange-600 badge-pill"><i class="icon-coin-dollar"></i></span>
-                                                <span data-bind="visible: !$data.Paid" class="badge bg-grey badge-pill"><i class="icon-coin-dollar"></i></span>
+                                                <span style="cursor:pointer" data-bind="visible: Prepared, click: Pack" class="badge bg-orange-600 badge-pill"><i class="icon-box"></i></span>
+                                                <span style="cursor:pointer" data-bind="visible: !Prepared() ,click: Pack" class="badge bg-grey badge-pill"><i class="icon-box"></i></span>
+                                                <span style="cursor:pointer" data-bind="visible: Delivered, click: Deliver" class="badge bg-orange-600 badge-pill"><i class="icon-bike"></i></span>
+                                                <span style="cursor:pointer" data-bind="visible: !Delivered(), click: Deliver" class="badge bg-grey badge-pill"><i class="icon-bike"></i></span>
+                                                <span style="cursor:pointer" data-bind="visible: Paid, click: Pay" class="badge bg-orange-600 badge-pill"><i class="icon-coin-dollar"></i></span>
+                                                <span style="cursor:pointer" data-bind="visible: !Paid(), click: Pay" class="badge bg-grey badge-pill"><i class="icon-coin-dollar"></i></span>
                                             </div>
                                             <div class="col-md-6" style="text-align:right">
                                                 <strong data-bind="text: $data.TentativeDeliveryDateFormattedLong"></strong>
@@ -112,23 +112,20 @@
                                         </table>
                                         <br />
                                         <div style="text-align:center">
-                                            <span style="font-size:15px" class="badge bg-blue"><text data-bind="text: $data.TotalCookiesCount"></text> Galletas</span>
+                                            <span style="font-size:15px" class="badge bg-blue"><text data-bind="text: TotalCookiesCount"></text> Galletas</span>
                                         </div>
                                     </td>
                                     <td>
-                                        <span style="font-size:15px" class="badge bg-danger-300">Costo: <text data-bind="text: $data.TotalCost.formatMoney(2)"></text> </span><br />
-                                        <span style="font-size:15px;color:white" class="badge bg-success-300">Precio: <text data-bind="text: $data.TotalPrice.formatMoney(2)"></text> </span><br />
-                                        <span style="font-size:15px;color:white" class="badge bg-success-300"><strong>Ganancia: <text data-bind="text: $data.Profit.formatMoney(2)"></text> </strong></span>
+                                        <span style="font-size:15px" class="badge bg-danger-300">Costo: <text data-bind="text: TotalCost().formatMoney(2)"></text> </span><br />
+                                        <span style="font-size:15px;color:white" class="badge bg-success-300">Precio: <text data-bind="text: TotalPrice().formatMoney(2)"></text> </span><br />
+                                        <span style="font-size:15px;color:white" class="badge bg-success-300"><strong>Ganancia: <text data-bind="text: Profit().formatMoney(2)"></text> </strong></span>
                                     </td>
                                     <td class="text-center">
                                         <div class="list-icons">
                                             <div class="dropdown">
                                                 <a href="#" class="list-icons-item dropdown-toggle caret-0" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i></a>
                                                 <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-164px, 19px, 0px);">
-                                                    <a data-bind="click: $parent.Pack" href="#" class="dropdown-item changeStatus"><i class="icon-box"></i> Empaquetar</a>
-                                                    <a data-bind="click: $parent.Deliver" href="#" class="dropdown-item changeStatus"><i class="icon-bike"></i> Entregar</a>
-                                                    <a data-bind="click: $parent.Pay" href="#" class="dropdown-item changeStatus"><i class="icon-coin-dollar"></i> Pagar</a>
-                                                    <div class="dropdown-divider"></div>
+                                                    <a data-bind="click: MarkAll" class="dropdown-item"><i class="icon-check"></i> Marcar todas</a>
                                                     <a data-bind="click: $parent.Edit" class="dropdown-item"><i class="icon-pencil"></i> Editar</a>
                                                     <a data-bind="click: $parent.Delete" href="#" class="dropdown-item delete"><i class="icon-trash"></i> Eliminar</a>
                                                 </div>
@@ -137,6 +134,22 @@
                                     </td>
                                 </tr>
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td></td>
+                                    <td style="text-align:center">
+                                        <h3>Total galletas</h3>
+                                        <span class="badge" style="background-color:#6C4E4C; color:white; font-size:15px;">Kookie: <text data-bind="text: TotalKookiecount"></text></span>
+                                        <span class="badge" style="background-color:#D99C59; font-size:15px">Kanela: <text data-bind="text: TotalKanelacount"></text></span>
+                                        <span class="badge" style="background-color:#4F2F2D; color:white; font-size:15px">Kakao: <text data-bind="text: TotalKakaocount"></text></span>
+                                        <br />
+                                        <span class="badge" style="background-color:#6C4E4C; color:white; font-size:15px;">Cerialito: <text data-bind="text: TotalNonCookies"></text></span>
+
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -149,6 +162,7 @@
     $(document).ready(function () {
         function ViewModel() {
             var self = this;
+            self.LastHeight = 0;
             self.Orders = ko.observableArray();
             self.DateToSearch = ko.observable();
             self.SearchPackaged = ko.observable(false);
@@ -179,12 +193,12 @@
             self.GetData = function () {
                 self.Loading(true);
                 var url = '/Orders/GetData/?delivered=' + self.SearchDelivered() +
-                                          '&packaged=' + self.SearchPackaged() + 
-                                          '&paid=' + self.SearchPaid();
+                    '&packaged=' + self.SearchPackaged() +
+                    '&paid=' + self.SearchPaid();
                 if (self.DateToSearch() != null && self.DateToSearch().length > 0) {
                     url = '/Orders/GetDataByDate?date=' + self.DateToSearch() + '&delivered=' + self.SearchDelivered() +
-                                          '&packaged=' + self.SearchPackaged() + 
-                                          '&paid=' + self.SearchPaid();; 
+                        '&packaged=' + self.SearchPackaged() +
+                        '&paid=' + self.SearchPaid();;
                 }
                 $.ajax({
                     url: url,
@@ -192,7 +206,10 @@
                     dataType: 'json',
                     success: function (data) {
                         self.Orders([]);
-                        self.Orders(data);
+                        for (var i = 0; i < data.length; i++) {
+                            self.Orders.push(new Order(data[i]));
+                        }
+
                         self.Loading(false);
                     }
                 });
@@ -202,9 +219,58 @@
                 var cookieTotal = 0;
                 for (var i = 0; i < self.Orders().length; i++) {
                     var order = self.Orders()[i];
-                    for (var j = 0; j < order.OrderDetails.length; j++) {
-                        var orderDetail = order.OrderDetails[j];
+                    for (var j = 0; j < order.OrderDetails().length; j++) {
+                        var orderDetail = order.OrderDetails()[j];
                         cookieTotal = cookieTotal + orderDetail.KakaoCount + orderDetail.KanelaCount + orderDetail.KookieCount;
+                    }
+                }
+                return cookieTotal;
+            })
+
+            self.TotalKookiecount = ko.computed(function () {
+                var cookieTotal = 0;
+                for (var i = 0; i < self.Orders().length; i++) {
+                    var order = self.Orders()[i];
+                    for (var j = 0; j < order.OrderDetails().length; j++) {
+                        var orderDetail = order.OrderDetails()[j];
+                        cookieTotal = cookieTotal + orderDetail.KookieCount;
+                    }
+                }
+                return cookieTotal;
+            })
+
+            self.TotalKakaocount = ko.computed(function () {
+                var cookieTotal = 0;
+                for (var i = 0; i < self.Orders().length; i++) {
+                    var order = self.Orders()[i];
+                    for (var j = 0; j < order.OrderDetails().length; j++) {
+                        var orderDetail = order.OrderDetails()[j];
+                        cookieTotal = cookieTotal + orderDetail.KakaoCount;
+                    }
+                }
+                return cookieTotal;
+            })
+
+            self.TotalNonCookies = ko.computed(function () {
+                var cookieTotal = 0;
+                for (var i = 0; i < self.Orders().length; i++) {
+                    var order = self.Orders()[i];
+                    for (var j = 0; j < order.OrderDetails().length; j++) {
+                        var orderDetail = order.OrderDetails()[j];
+                        if (orderDetail.Package.CookiesQuantity == 0)
+                            cookieTotal++;
+                    }
+                }
+                return cookieTotal;
+            })
+
+            self.TotalKanelacount = ko.computed(function () {
+                var cookieTotal = 0;
+                for (var i = 0; i < self.Orders().length; i++) {
+                    var order = self.Orders()[i];
+                    for (var j = 0; j < order.OrderDetails().length; j++) {
+                        var orderDetail = order.OrderDetails()[j];
+                        cookieTotal = cookieTotal + orderDetail.KanelaCount;
                     }
                 }
                 return cookieTotal;
@@ -214,9 +280,7 @@
                 var totalPay = 0;
                 for (var i = 0; i < self.Orders().length; i++) {
                     var order = self.Orders()[i];
-                    console.log(order);
-                    totalPay = totalPay + parseFloat(order.TotalPrice);
-                    console.log(totalPay);
+                    totalPay = totalPay + parseFloat(order.TotalPrice());
                 }
                 return totalPay;
             })
@@ -225,43 +289,10 @@
                 var totalProfit = 0;
                 for (var i = 0; i < self.Orders().length; i++) {
                     var order = self.Orders()[i];
-                    totalProfit = totalProfit + (parseFloat(order.TotalPrice) - parseFloat(order.TotalCost));
+                    totalProfit = totalProfit + (parseFloat(order.TotalPrice()) - parseFloat(order.TotalCost()));
                 }
                 return totalProfit;
             })
-
-            self.Pack = function (order) {
-                $.ajax({
-                    url: '/Orders/MarkAsPrepared/' + order.Id,
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function () {
-                        self.GetData();
-                    }
-                });
-            }
-
-            self.Deliver = function (order) {
-                $.ajax({
-                    url: '/Orders/MarkAsDelivered/' + order.Id,
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function () {
-                        self.GetData();
-                    }
-                });
-            }
-
-            self.Pay = function (order) {
-                $.ajax({
-                    url: '/Orders/MarkAsPayed/' + order.Id,
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function () {
-                        self.GetData();
-                    }
-                });
-            }
 
             self.Edit = function (order) {
                 window.location.replace("/Orders/Edit/" + order.Id);
@@ -283,6 +314,77 @@
 
             $('.datepicker').datepicker({
             });
+        }
+
+        function Order(data) {
+            var self = this;
+            self.Id = data.Id;
+            self.ClientName = ko.observable(data.ClientName);
+            self.ClientPhone = ko.observable(data.ClientPhone);
+            self.ClientEmail = ko.observable(data.ClientEmail);
+            self.ClientInstagram = ko.observable(data.ClientInstagram);
+            self.ClientAddress = ko.observable(data.ClientAddress);
+            self.PaymentMethod = ko.observable(data.PaymentMethod);
+            self.DeliveryMethod = ko.observable(data.DeliveryMethod);
+            self.TotalCost = ko.observable(data.TotalCost);
+            self.TotalPrice = ko.observable(data.TotalPrice);
+            self.Profit = ko.observable(data.Profit);
+            self.Notes = ko.observable(data.Notes);
+            self.OrderDetails = ko.observableArray(data.OrderDetails);
+            self.TotalCookiesCount = ko.observable(data.TotalCookiesCount);
+            self.Prepared = ko.observable(data.Prepared);
+            self.Delivered = ko.observable(data.Delivered);
+            self.Paid = ko.observable(data.Paid);
+
+            self.Pack = function () {
+                $.ajax({
+                    url: '/Orders/MarkAsPrepared/' + self.Id,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function () {
+                        var prepared = !self.Prepared();
+                        self.Prepared(prepared);
+                    }
+                });
+            }
+
+            self.Deliver = function () {
+                $.ajax({
+                    url: '/Orders/MarkAsDelivered/' + self.Id,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function () {
+                        var delivered = !self.Delivered();
+                        self.Delivered(delivered);
+                    }
+                });
+            }
+
+            self.Pay = function () {
+                $.ajax({
+                    url: '/Orders/MarkAsPayed/' + self.Id,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function () {
+                        var paid = !self.Paid();
+                        self.Paid(paid);
+                    }
+                });
+            }
+
+            self.MarkAll = function () {
+                $.ajax({
+                    url: '/Orders/MarkEverything/' + self.Id,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function () {
+                        self.Prepared(true)
+                        self.Delivered(true);
+                        self.Paid(true);
+                    }
+                });
+            }
+
         }
 
         var viewModel = new ViewModel();
