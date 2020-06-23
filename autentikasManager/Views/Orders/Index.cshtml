@@ -67,7 +67,7 @@
                                                 <span style="cursor:pointer" data-bind="visible: !Paid(), click: Pay" class="badge bg-grey badge-pill"><i class="icon-coin-dollar"></i></span>
                                             </div>
                                             <div class="col-md-6" style="text-align:right">
-                                                <strong data-bind="text: $data.TentativeDeliveryDateFormattedLong"></strong>
+                                                <strong data-bind="text: TentativeDeliveryDateFormattedLong"></strong>
                                             </div>
                                         </div>
 
@@ -335,6 +335,7 @@
             self.Prepared = ko.observable(data.Prepared);
             self.Delivered = ko.observable(data.Delivered);
             self.Paid = ko.observable(data.Paid);
+            self.TentativeDeliveryDateFormattedLong = ko.observable(data.TentativeDeliveryDateFormattedLong);
 
             self.Pack = function () {
                 $.ajax({
