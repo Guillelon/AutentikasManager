@@ -1,5 +1,4 @@
-﻿@model IList<DAL.Models.Order>
-
+﻿@model autentikasManager.ViewModels.IndexViewModel
 <div id="OrdersHub">
     <div class="card" style="min-height: 100%">
         <div class="card-body">
@@ -192,6 +191,7 @@
 
             self.GetData = function () {
                 self.Loading(true);
+                console.log(self.DateToSearch());
                 var url = '/Orders/GetData/?delivered=' + self.SearchDelivered() +
                     '&packaged=' + self.SearchPackaged() +
                     '&paid=' + self.SearchPaid();
@@ -390,6 +390,19 @@
 
         var viewModel = new ViewModel();
         ko.applyBindings(viewModel, document.getElementById('OrdersHub'));
-        viewModel.GetData();
+
+        @if (Model.Date != null && Model.Date.Length > 0)
+        {
+            <text>
+                viewModel.DateToSearch('@Model.Date');
+                viewModel.GetData();
+            </text>
+        }
+        else
+        {
+            <text>
+                viewModel.GetData();
+            </text>
+        }
     })
 </script>

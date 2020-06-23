@@ -1,4 +1,5 @@
-﻿using DAL.Models;
+﻿using autentikasManager.ViewModels;
+using DAL.Models;
 using DAL.Repositories;
 using System;
 using System.Collections.Generic;
@@ -19,10 +20,17 @@ namespace autentikasManager.Controllers
             _repo = new OrdersRepository();
         }
 
-        public ActionResult Index()
+        public ActionResult Index(int addedId = 0)
         {
-            var orders = _repo.GetAll();
-            return View(orders);
+            var queryDate = string.Empty;
+            if (addedId > 0)
+            {
+                var newOrder = _repo.Get(addedId);
+                queryDate = newOrder.TentativeDeliveryDateFormatted;
+            }
+            var viewModel = new IndexViewModel();
+            viewModel.Date = queryDate;
+            return View("Index", viewModel);
         }
 
         public string GetData(bool delivered, bool packaged, bool paid)

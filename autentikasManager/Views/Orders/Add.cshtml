@@ -243,7 +243,7 @@
                 </div>
 
                 <div class="modal-footer" style="text-align:center">
-                    <a href="/Orders/Index" class="btn bg-teal-400 btn-block">Aceptar</a>
+                    <a data-bind="attr: { href: NewURL }" class="btn bg-teal-400 btn-block">Aceptar</a>
                 </div>
             </div>
         </div>
@@ -281,7 +281,8 @@
             self.TentativeDeliveryDate = ko.observable();
             self.Notes = ko.observable();
             self.DeliveryMethod = ko.observable();
-
+            self.NewURL = ko.observable();
+            
             $('.datepicker').datepicker({
             });
 
@@ -374,9 +375,10 @@
                     url: url,
                     type: 'POST',
                     data: order,
-                    dataType: 'json',
                     success: function (data) {
                         $('#sucessModal').modal('show');
+                        console.log(data);
+                        self.NewURL('/Orders/Index?addedId=' + data);
                     }
                 });
             }
