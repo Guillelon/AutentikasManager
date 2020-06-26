@@ -35,7 +35,7 @@ namespace autentikasManager.Controllers
 
         public string GetData(bool delivered, bool packaged, bool paid)
         {
-            var orders = _repo.GetPending(delivered,packaged,paid);
+            var orders = _repo.GetPending(delivered, packaged, paid);
             return new JavaScriptSerializer().Serialize(orders);
         }
 
@@ -66,7 +66,10 @@ namespace autentikasManager.Controllers
         {
             order.TotalPrice = order.OrderDetails.Sum(d => d.Price);
             order.TotalCost = order.OrderDetails.Sum(d => d.Cost);
-            var newOrder = _repo.AddOrEdit(order); 
+            if (order.DeliveryMethod == "Pickup")
+                order.DeliveryFee = 0;
+            order.TotalPrice += order.DeliveryFee;
+            var newOrder = _repo.AddOrEdit(order);
             return newOrder.Id.ToString();
         }
 

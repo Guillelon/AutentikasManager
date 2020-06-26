@@ -55,7 +55,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                             <div class="form-group form-group-feedback form-group-feedback-left">
                                 <select class="form-control" data-bind="value: DeliveryMethod">
                                     <option>Delivery</option>
@@ -63,6 +63,14 @@
                                 </select>
                                 <div class="form-control-feedback">
                                     <i class="icon-bike text-muted"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group form-group-feedback form-group-feedback-left">
+                                <input data-bind="value: DeliveryFee, enable: EnableDelivery" class="form-control" type="number" />
+                                <div class="form-control-feedback">
+                                    <i class="icon-coin-euro text-muted"></i>
                                 </div>
                             </div>
                         </div>
@@ -146,7 +154,7 @@
                             <div class="form-group form-group-feedback form-group-feedback-left">
                                 <input data-bind="value: SelectedCost" class="form-control" type="number" placeholder="Costo" />
                                 <div class="form-control-feedback">
-                                    <i class="icon-coin-dollar text-muted"></i>
+                                    <i class="icon-coin-euro text-muted"></i>
                                 </div>
                             </div>
                         </div>
@@ -155,7 +163,7 @@
                             <div class="form-group form-group-feedback form-group-feedback-left">
                                 <input data-bind="value: SelectedPrice" class="form-control" type="number" placeholder="Precio" />
                                 <div class="form-control-feedback">
-                                    <i class="icon-coin-dollar text-muted"></i>
+                                    <i class="icon-coin-euro text-muted"></i>
                                 </div>
                             </div>
                         </div>
@@ -282,9 +290,16 @@
             self.Notes = ko.observable();
             self.DeliveryMethod = ko.observable();
             self.NewURL = ko.observable();
-            
+            self.DeliveryFee = ko.observable(1.5);
+
             $('.datepicker').datepicker({
             });
+
+            self.EnableDelivery = ko.computed(function () {
+                if (self.DeliveryMethod() == 'Delivery')
+                    return true;
+                return false;
+            }, self);
 
             self.GetData = function () {
                 $.ajax({
@@ -369,6 +384,7 @@
                 order.ClientInstagram = self.ClientInstagram();
                 order.TentativeDeliveryDate = self.TentativeDeliveryDate();
                 order.DeliveryMethod = self.DeliveryMethod();
+                order.DeliveryFee = self.DeliveryFee();
                 order.Notes = self.Notes();
                 url = '/Orders/Process';
                 $.ajax({
@@ -398,6 +414,7 @@
                         self.TentativeDeliveryDate(data.TentativeDeliveryDateFormatted);
                         self.Notes(data.Notes);
                         self.DeliveryMethod(data.DeliveryMethod);
+                        self.DeliveryFee(data.DeliveryFee);
 
                         for (var i = 0; i < data.OrderDetails.length; i++) {
                             var detail = data.OrderDetails[i];

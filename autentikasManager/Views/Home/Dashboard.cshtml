@@ -1,40 +1,54 @@
 ﻿@model autentikasManager.ViewModels.DashboardViewModel
-<div class="row">
-    <div class="col-lg-2">
-        <!-- Members online -->
-        <div class="card bg-teal-400">
-            <div class="card-body">
-                <div class="d-flex">
-                    <h3 class="font-weight-semibold mb-0"> <i class="icon-cart"></i> @Model.PendingOrders</h3>
-                </div>
-                <div>
-                    Ordenes Pendientes
-                </div>
-            </div>
-        </div>
-        <!-- /members online -->
-    </div>
-    <div class="col-lg-3">
-        <!-- Members online -->
-        <div class="card bg-indigo-400">
-            <div class="card-body">
-                <div class="d-flex">
-                    @if (Model.DatesInfo != null && Model.DatesInfo.Count > 0)
-                    {
-                        <h3 class="font-weight-semibold mb-0">
-                            <i class="icon-calendar"></i>
-                            @Model.DatesInfo.FirstOrDefault().TentativeDeliveryDateFormattedLong
-                        </h3>
-                    }
-                </div>
-                <div>
-                    Próxima fecha de delivery
+    <div class="row">
+        <div class="col-lg-2">
+            <!-- Members online -->
+            <div class="card bg-blue-400">
+                <div class="card-body">
+                    <div class="d-flex">
+                        <h3 class="font-weight-semibold mb-0"> <i class="icon-cart"></i> @Model.TotalOrders</h3>
+                    </div>
+                    <div>
+                        Ordenes Totales
+                    </div>
                 </div>
             </div>
+            <!-- /members online -->
         </div>
-        <!-- /members online -->
+        <div class="col-lg-2">
+            <!-- Members online -->
+            <div class="card bg-teal-400">
+                <div class="card-body">
+                    <div class="d-flex">
+                        <h3 class="font-weight-semibold mb-0"> <i class="icon-cart"></i> @Model.PendingOrders</h3>
+                    </div>
+                    <div>
+                        Ordenes Pendientes
+                    </div>
+                </div>
+            </div>
+            <!-- /members online -->
+        </div>
+        <div class="col-lg-3">
+            <!-- Members online -->
+            <div class="card bg-indigo-400">
+                <div class="card-body">
+                    <div class="d-flex">
+                        @if (Model.DatesInfo != null && Model.DatesInfo.Count > 0)
+                        {
+                            <h3 class="font-weight-semibold mb-0">
+                                <i class="icon-calendar"></i>
+                                @Model.DatesInfo.FirstOrDefault().TentativeDeliveryDateFormattedLong
+                            </h3>
+                        }
+                    </div>
+                    <div>
+                        Próxima fecha de delivery
+                    </div>
+                </div>
+            </div>
+            <!-- /members online -->
+        </div>
     </div>
-</div>
 <div class="row">
     <div class="col-lg-3">
         <div class="card">
@@ -115,7 +129,7 @@
               labels: dataPackagesName,
               datasets: [
                 {
-                  label: "Population (millions)",
+                  label: "Ordenes",
                   backgroundColor: ["#4F2F2D", "#D99C59","#6C4E4C","#040707","#DA9E5A"],
                   data: dataPackagesCount
                 }

@@ -92,6 +92,14 @@
     <Compile Include="Migrations\202006142234180_AddingActiveToPackage.designer.cs">
       <DependentUpon>202006142234180_AddingActiveToPackage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202006252245314_ChangingOrderDEtailProductIdToNull.cs" />
+    <Compile Include="Migrations\202006252245314_ChangingOrderDEtailProductIdToNull.designer.cs">
+      <DependentUpon>202006252245314_ChangingOrderDEtailProductIdToNull.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006260147030_AddingDeliveryMethodtoOrder.cs" />
+    <Compile Include="Migrations\202006260147030_AddingDeliveryMethodtoOrder.designer.cs">
+      <DependentUpon>202006260147030_AddingDeliveryMethodtoOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\autentikasDBContext.cs" />
     <Compile Include="Models\Cookie.cs" />
@@ -136,6 +144,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202006142234180_AddingActiveToPackage.resx">
       <DependentUpon>202006142234180_AddingActiveToPackage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006252245314_ChangingOrderDEtailProductIdToNull.resx">
+      <DependentUpon>202006252245314_ChangingOrderDEtailProductIdToNull.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006260147030_AddingDeliveryMethodtoOrder.resx">
+      <DependentUpon>202006260147030_AddingDeliveryMethodtoOrder.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -51,6 +51,7 @@ namespace DAL.Models
         public string ClientInstagram { get; set; }
         public string Notes { get; set; }
         public string DeliveryMethod { get; set; }
+        public decimal DeliveryFee { get; set; }
 
         public virtual IList<OrderDetail> OrderDetails { get; set; }
 

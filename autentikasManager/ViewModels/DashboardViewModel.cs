@@ -13,6 +13,7 @@ namespace autentikasManager.ViewModels
         public int KookieCount { get; set; }
         public int KanelaCount { get; set; }
         public int KakaoCount { get; set; }
+        public int TotalOrders { get; set; }
         public IList<PackageCountDTO> PackageCount { get; set; }
     }
 }
