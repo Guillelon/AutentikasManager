@@ -111,5 +111,17 @@ namespace autentikasManager.Controllers
             _repo.SimpleEdit(order);
             return "200";
         }
+
+        public string GetClientsByName(string query)
+        {
+            var clients = _repo.GetByClientName(query);
+            return new JavaScriptSerializer().Serialize(clients);
+        }
+
+        public string GetOrderByClientName(string query)
+        {
+            var order = _repo.GetOrderByClientName(query);
+            return new JavaScriptSerializer().Serialize(order);
+        }
     }
 }

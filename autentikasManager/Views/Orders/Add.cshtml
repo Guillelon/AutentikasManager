@@ -13,7 +13,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group form-group-feedback form-group-feedback-left">
-                                <input data-bind="value: ClientName" class="form-control" placeholder="Nombre" />
+                                <input id="clientName" data-bind="value: ClientName" class="form-control" placeholder="Nombre" />
                                 <div class="form-control-feedback">
                                     <i class="icon-user text-muted"></i>
                                 </div>
@@ -293,6 +293,35 @@
             self.DeliveryFee = ko.observable(1.5);
 
             $('.datepicker').datepicker({
+
+            });
+
+            var demo = new autoComplete({
+                selector: '#clientName',
+                minChars: 3,
+                source: function (term, response) {
+                    $.getJSON('/Orders/GetClientsByName/', { query: term.trim() }, function (data) {
+                        console.log(data);
+                        response(data);
+                    });
+                },
+                onSelect: function (event, term, item) {
+                    $.ajax({
+                        url: '/Orders/GetOrderByClientName?query=' + item.dataset.val,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function (data) {
+                            self.ClientPhone(data.ClientPhone);
+                            self.ClientAddress(data.ClientAddress);
+                            self.ClientEmail(data.ClientEmail);
+                            self.ClientInstagram(data.ClientInstagram);
+                        }
+                    });
+                    //var aux = item.dataset.val.split(" ");
+                    //zipcargoIdSelectedForPackages = aux[0];
+                    //$('#searchClientPackages').attr("disabled", false);
+                    //$('#noClientFoundPackages').hide();
+                }
             });
 
             self.EnableDelivery = ko.computed(function () {

@@ -60,7 +60,14 @@ namespace DAL.Models
         {
             get
             {
-                return OrderDetails.Sum(o => o.KakaoCount + o.KanelaCount + o.KookieCount);
+                try
+                {
+                    return OrderDetails.Sum(o => o.KakaoCount + o.KanelaCount + o.KookieCount);
+                }
+                catch
+                {
+                    return 0;
+                }
             }
         }
 

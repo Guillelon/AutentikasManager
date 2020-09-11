@@ -162,5 +162,19 @@ namespace DAL.Repositories
                 " ORDER BY PackageCount DESC";
             return _context.Database.SqlQuery<PackageCountDTO>(query).ToList();
         }
+
+        public IList<string> GetByClientName(string search)
+        {
+            var query = " SELECT CLIENTNAME FROM [dbo].[Orders] " +
+                " WHERE CLIENTNAME LIKE '%" + search + "%'";
+            return _context.Database.SqlQuery<string>(query).ToList();
+        }
+
+        public Order GetOrderByClientName(string clientName)
+        {
+            var query = " SELECT * FROM [dbo].[Orders] " +
+                " WHERE CLIENTNAME = '" + clientName + "'";
+            return _context.Database.SqlQuery<Order>(query).FirstOrDefault();
+        }
     }
 }
