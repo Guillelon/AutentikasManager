@@ -310,7 +310,8 @@
                         url: '/Orders/GetOrderByClientName?query=' + item.dataset.val,
                         type: 'GET',
                         dataType: 'json',
-                        success: function (data) {
+                        success: function (data)
+                        {
                             self.ClientPhone(data.ClientPhone);
                             self.ClientAddress(data.ClientAddress);
                             self.ClientEmail(data.ClientEmail);
