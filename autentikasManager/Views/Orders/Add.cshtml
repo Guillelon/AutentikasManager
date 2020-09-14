@@ -200,11 +200,21 @@
                                 <tfoot>
                                     <tr>
                                         <td colspan="2" style="text-align:right">
-                                            <strong>Total </strong>
+                                            <strong>Sub total: </strong>
                                         </td>
                                         <td colspan="2" style="text-align:center">
                                             <strong>
                                                 <text data-bind="text: Total().formatMoney(2)"></text>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="text-align:right">
+                                            <strong>Total: </strong>
+                                        </td>
+                                        <td colspan="2" style="text-align:center">
+                                            <strong>
+                                                <text data-bind="text: AllTotal().formatMoney(2)"></text>
                                             </strong>
                                         </td>
                                     </tr>
@@ -300,8 +310,7 @@
                 selector: '#clientName',
                 minChars: 3,
                 source: function (term, response) {
-                    $.getJSON('/Orders/GetClientsByName/', { query: term.trim() }, function (data) {
-                        console.log(data);
+                    $.getJSON('/Orders/GetClientsByName/', { query: term.trim() }, function (data) {                        
                         response(data);
                     });
                 },
@@ -363,6 +372,16 @@
                     total += parseFloat(item.Price);
                 });
 
+                return total;
+            }, self);
+
+            self.AllTotal = ko.computed(function () {
+                var total = 0;
+
+                ko.utils.arrayForEach(self.OrderDetails(), function (item) {
+                    total += parseFloat(item.Price);
+                });
+                total += parseFloat(self.DeliveryFee());
                 return total;
             }, self);
 
