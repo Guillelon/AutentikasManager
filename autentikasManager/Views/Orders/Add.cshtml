@@ -150,13 +150,16 @@
                     </div>
                     <div class="row" data-bind="visible: SelectedPackage() > 0">
                         <div class="col-md-6">
-                            <small>Costo</small>
-                            <div class="form-group form-group-feedback form-group-feedback-left">
-                                <input data-bind="value: SelectedCost" class="form-control" type="number" placeholder="Costo" />
-                                <div class="form-control-feedback">
-                                    <i class="icon-coin-euro text-muted"></i>
+                            @if (User.IsInRole(autentikasManager.Resources.Roles.Admin))
+                            {
+                                <small>Costo</small>
+                                <div class="form-group form-group-feedback form-group-feedback-left">
+                                    <input data-bind="value: SelectedCost" class="form-control" type="number" placeholder="Costo" />
+                                    <div class="form-control-feedback">
+                                        <i class="icon-coin-euro text-muted"></i>
+                                    </div>
                                 </div>
-                            </div>
+                            }
                         </div>
                         <div class="col-md-6">
                             <small>Precio</small>
@@ -182,7 +185,10 @@
                                 <thead>
                                     <tr>
                                         <td>Nombre</td>
-                                        <td>Costo</td>
+                                        @if (User.IsInRole(autentikasManager.Resources.Roles.Admin))
+                                        {
+                                            <td>Costo</td>
+                                        }
                                         <td>Precio</td>
                                         <td></td>
                                     </tr>
@@ -190,7 +196,10 @@
                                 <tbody data-bind="foreach: OrderDetails">
                                     <tr>
                                         <td data-bind="text: Name"></td>
-                                        <td data-bind="text: Cost.formatMoney(2)"></td>
+                                        @if (User.IsInRole(autentikasManager.Resources.Roles.Admin))
+                                        {
+                                            <td data-bind="text: Cost.formatMoney(2)"></td>
+                                        }
                                         <td data-bind="text: Price.formatMoney(2)"></td>
                                         <td data-bind="click: $parent.Delete" style="text-align:center">
                                             <i class="icon-trash"></i>
@@ -310,7 +319,7 @@
                 selector: '#clientName',
                 minChars: 3,
                 source: function (term, response) {
-                    $.getJSON('/Orders/GetClientsByName/', { query: term.trim() }, function (data) {                        
+                    $.getJSON('/Orders/GetClientsByName/', { query: term.trim() }, function (data) {
                         response(data);
                     });
                 },
