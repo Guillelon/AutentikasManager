@@ -2,7 +2,7 @@
 
 <div class="card">
     <div class="card-body">
-        @if(ViewBag.SuccessMessage != null)
+        @if (ViewBag.SuccessMessage != null)
         {
             <div class="alert alert-success" role="alert">@ViewBag.SuccessMessage</div>
         }
@@ -18,9 +18,12 @@
                     <th>
                         Cantidad de galletas
                     </th>
-                    <th>
-                        Costo
-                    </th>
+                    @if (User.IsInRole(autentikasManager.Resources.Roles.Admin))
+                    {
+                        <th>
+                            Costo
+                        </th>
+                    }
                     <th>
                         Precio
                     </th>
@@ -28,7 +31,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach(var package in Model)
+                @foreach (var package in Model)
                 {
                     <tr>
                         <td>
@@ -49,30 +52,36 @@
                         <td>
                             @package.CookiesQuantity
                         </td>
-                        <td>
-                            @string.Format("{0:C}", package.Cost)
-                        </td>
+                        @if (User.IsInRole(autentikasManager.Resources.Roles.Admin))
+                        {
+                            <td>
+                                @string.Format("{0:C}", package.Cost)
+                            </td>
+                        }
                         <td>
                             @string.Format("{0:C}", package.Price)
                         </td>
-                        <td style="text-align:center"> 
-                            <div class="list-icons">
-                                <div class="dropdown">
-                                    <a href="#" class="list-icons-item dropdown-toggle caret-0" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i></a>
-                                    <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-164px, 19px, 0px);">
-                                        <a href="/Package/Edit/@package.Id" class="dropdown-item"><i class="icon-pencil"></i> Editar</a>
-                                        @if (package.Active)
-                                        {
-                                            <a href="/Package/Activate/@package.Id" class="dropdown-item"><i class="icon-warning"></i> Desactivar</a>
-                                        }
-                                        else
-                                        {
-                                            <a href="/Package/Activate/@package.Id" class="dropdown-item"><i class="icon-warning"></i> Activar</a>
-                                        }
+                        <td style="text-align:center">
+                            @if (User.IsInRole(autentikasManager.Resources.Roles.Admin))
+                            {
+                                <div class="list-icons">
+                                    <div class="dropdown">
+                                        <a href="#" class="list-icons-item dropdown-toggle caret-0" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-164px, 19px, 0px);">
+                                            <a href="/Package/Edit/@package.Id" class="dropdown-item"><i class="icon-pencil"></i> Editar</a>
+                                            @if (package.Active)
+                                            {
+                                                <a href="/Package/Activate/@package.Id" class="dropdown-item"><i class="icon-warning"></i> Desactivar</a>
+                                            }
+                                            else
+                                            {
+                                                <a href="/Package/Activate/@package.Id" class="dropdown-item"><i class="icon-warning"></i> Activar</a>
+                                            }
 
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            }
                         </td>
                     </tr>
                 }

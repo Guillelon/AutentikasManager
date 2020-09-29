@@ -72,19 +72,16 @@
                     }
                 </li>
 
-                @if (User.IsInRole(autentikasManager.Resources.Roles.Admin))
-                {
-                    <li class="nav-item">
-                        @if (CurrentURL.Contains("Package"))
-                        {
-                            <a href="/Package/Index" class="nav-link active"> <i class="icon-box"></i> Menú</a>
-                        }
-                        else
-                        {
-                            <a href="/Package/Index" class="nav-link"> <i class="icon-box"></i> Menú</a>
-                        }
-                    </li>
-                }
+                <li class="nav-item">
+                    @if (CurrentURL.Contains("Package"))
+                    {
+                        <a href="/Package/Index" class="nav-link active"> <i class="icon-box"></i> Menú</a>
+                    }
+                    else
+                    {
+                        <a href="/Package/Index" class="nav-link"> <i class="icon-box"></i> Menú</a>
+                    }
+                </li>
 
 
 
