@@ -173,7 +173,6 @@
         var monthsPrices = JSON.parse('@Html.Raw(Json.Encode(Model.MonthInfo.Select(p => p.Price)))');
         var monthsProfits = JSON.parse('@Html.Raw(Json.Encode(Model.MonthInfo.Select(p => p.Profit)))');
       
-
         var months = new Chart(document.getElementById("monthsChart"), {
             type: 'bar',
             data: {
