@@ -64,20 +64,24 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-6">
-        <div class="card">
-            <div class="card-header header-elements-sm-inline">
-                <h3><i class="icon-chart"></i> Info Mensual</h3>
-            </div>
-            <div class="card-body">
-                <div>
-                    <div class="loaded-charts">
-                        <canvas style="max-height:250px" id="monthsChart" width="200" height="100"></canvas>
+    @if (User.IsInRole(autentikasManager.Resources.Roles.Admin))
+    {
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header header-elements-sm-inline">
+                    <h3><i class="icon-chart"></i> Info Mensual</h3>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <div class="loaded-charts">
+                            <canvas style="max-height:250px" id="monthsChart" width="200" height="100"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+
+    }
     <div class="col-lg-6">
         <div class="card">
             <div class="card-header header-elements-sm-inline">
@@ -168,10 +172,7 @@
         var monthsCosts = JSON.parse('@Html.Raw(Json.Encode(Model.MonthInfo.Select(p => p.Cost)))');
         var monthsPrices = JSON.parse('@Html.Raw(Json.Encode(Model.MonthInfo.Select(p => p.Price)))');
         var monthsProfits = JSON.parse('@Html.Raw(Json.Encode(Model.MonthInfo.Select(p => p.Profit)))');
-        console.log(monthsNames);
-        console.log(monthsCosts);
-        console.log(monthsPrices);
-        console.log(monthsProfits);
+      
 
         var months = new Chart(document.getElementById("monthsChart"), {
             type: 'bar',
