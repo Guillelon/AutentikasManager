@@ -29,6 +29,7 @@ namespace autentikasManager.Controllers
             viewModel.KanelaCount = dto.KanelaCount.HasValue ? dto.KanelaCount.Value : 0;
             viewModel.KookieCount = dto.KookieCount.HasValue ? dto.KookieCount.Value : 0;
             viewModel.PackageCount = ordersRepository.GetPackageCount();
+            viewModel.MonthInfo = ordersRepository.MonthsInfo();
             return View(viewModel);
         }
 

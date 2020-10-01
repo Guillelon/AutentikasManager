@@ -15,5 +15,6 @@ namespace autentikasManager.ViewModels
         public int KakaoCount { get; set; }
         public int TotalOrders { get; set; }
         public IList<PackageCountDTO> PackageCount { get; set; }
+        public IList<MonthInfo> MonthInfo { get; set; }
     }
 }

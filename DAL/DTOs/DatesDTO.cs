@@ -33,4 +33,13 @@ namespace DAL.DTOs
         public string Name { get; set; }
         public int PackageCount { get; set; }
     }
+
+    public class MonthInfo
+    {
+        public string Month { get; set; }
+        public int Year { get; set; }
+        public decimal Cost { get; set; }
+        public decimal Price { get; set; }
+        public decimal Profit { get; set; }
+    }
 }

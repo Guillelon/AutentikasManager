@@ -1,54 +1,54 @@
 ﻿@model autentikasManager.ViewModels.DashboardViewModel
-    <div class="row">
-        <div class="col-lg-2">
-            <!-- Members online -->
-            <div class="card bg-blue-400">
-                <div class="card-body">
-                    <div class="d-flex">
-                        <h3 class="font-weight-semibold mb-0"> <i class="icon-cart"></i> @Model.TotalOrders</h3>
-                    </div>
-                    <div>
-                        Ordenes Totales
-                    </div>
+<div class="row">
+    <div class="col-lg-2">
+        <!-- Members online -->
+        <div class="card bg-blue-400">
+            <div class="card-body">
+                <div class="d-flex">
+                    <h3 class="font-weight-semibold mb-0"> <i class="icon-cart"></i> @Model.TotalOrders</h3>
+                </div>
+                <div>
+                    Ordenes Totales
                 </div>
             </div>
-            <!-- /members online -->
         </div>
-        <div class="col-lg-2">
-            <!-- Members online -->
-            <div class="card bg-teal-400">
-                <div class="card-body">
-                    <div class="d-flex">
-                        <h3 class="font-weight-semibold mb-0"> <i class="icon-cart"></i> @Model.PendingOrders</h3>
-                    </div>
-                    <div>
-                        Ordenes Pendientes
-                    </div>
-                </div>
-            </div>
-            <!-- /members online -->
-        </div>
-        <div class="col-lg-3">
-            <!-- Members online -->
-            <div class="card bg-indigo-400">
-                <div class="card-body">
-                    <div class="d-flex">
-                        @if (Model.DatesInfo != null && Model.DatesInfo.Count > 0)
-                        {
-                            <h3 class="font-weight-semibold mb-0">
-                                <i class="icon-calendar"></i>
-                                @Model.DatesInfo.FirstOrDefault().TentativeDeliveryDateFormattedLong
-                            </h3>
-                        }
-                    </div>
-                    <div>
-                        Próxima fecha de delivery
-                    </div>
-                </div>
-            </div>
-            <!-- /members online -->
-        </div>
+        <!-- /members online -->
     </div>
+    <div class="col-lg-2">
+        <!-- Members online -->
+        <div class="card bg-teal-400">
+            <div class="card-body">
+                <div class="d-flex">
+                    <h3 class="font-weight-semibold mb-0"> <i class="icon-cart"></i> @Model.PendingOrders</h3>
+                </div>
+                <div>
+                    Ordenes Pendientes
+                </div>
+            </div>
+        </div>
+        <!-- /members online -->
+    </div>
+    <div class="col-lg-3">
+        <!-- Members online -->
+        <div class="card bg-indigo-400">
+            <div class="card-body">
+                <div class="d-flex">
+                    @if (Model.DatesInfo != null && Model.DatesInfo.Count > 0)
+                    {
+                        <h3 class="font-weight-semibold mb-0">
+                            <i class="icon-calendar"></i>
+                            @Model.DatesInfo.FirstOrDefault().TentativeDeliveryDateFormattedLong
+                        </h3>
+                    }
+                </div>
+                <div>
+                    Próxima fecha de delivery
+                </div>
+            </div>
+        </div>
+        <!-- /members online -->
+    </div>
+</div>
 <div class="row">
     <div class="col-lg-3">
         <div class="card">
@@ -58,7 +58,21 @@
             <div class="card-body">
                 <div>
                     <div class="loaded-charts">
-                        <canvas id="salesChart" width="75" height="75"></canvas>
+                        <canvas style="max-height:250px" id="salesChart" width="75" height="75"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header header-elements-sm-inline">
+                <h3><i class="icon-chart"></i> Info Mensual</h3>
+            </div>
+            <div class="card-body">
+                <div>
+                    <div class="loaded-charts">
+                        <canvas style="max-height:250px" id="monthsChart" width="200" height="100"></canvas>
                     </div>
                 </div>
             </div>
@@ -72,7 +86,7 @@
             <div class="card-body">
                 <div>
                     <div class="loaded-charts">
-                        <canvas id="productsChart" width="200" height="100"></canvas>
+                        <canvas style="max-height:250px" id="productsChart" width="200" height="100"></canvas>
                     </div>
                 </div>
             </div>
@@ -121,8 +135,7 @@
         var dataPackagesName = JSON.parse(packagesName);
         var packagesCount = '@Html.Raw(Json.Encode(Model.PackageCount.Select(p => p.PackageCount)))';
         var dataPackagesCount = JSON.parse(packagesCount);
-        console.log(dataPackagesName);
-        console.log(dataPackagesCount);
+
         var bar = new Chart(document.getElementById("productsChart"), {
             type: 'horizontalBar',
             data: {
@@ -138,6 +151,53 @@
             options: {
                  scales: {
                     xAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
+              legend: { display: false },
+              title: {
+                display: true,
+                text: 'Ordenes'
+              }
+            }
+        });
+
+        var monthsNames = JSON.parse('@Html.Raw(Json.Encode(Model.MonthInfo.Select(p => p.Month)))');
+        var monthsCosts = JSON.parse('@Html.Raw(Json.Encode(Model.MonthInfo.Select(p => p.Cost)))');
+        var monthsPrices = JSON.parse('@Html.Raw(Json.Encode(Model.MonthInfo.Select(p => p.Price)))');
+        var monthsProfits = JSON.parse('@Html.Raw(Json.Encode(Model.MonthInfo.Select(p => p.Profit)))');
+        console.log(monthsNames);
+        console.log(monthsCosts);
+        console.log(monthsPrices);
+        console.log(monthsProfits);
+
+        var months = new Chart(document.getElementById("monthsChart"), {
+            type: 'bar',
+            data: {
+                labels: monthsNames,
+                datasets: [
+                    {
+                      label: "Costo",
+                        data: monthsCosts,
+                        backgroundColor:  'rgba(229,115,115, 1)'
+                    },
+                    {
+                      label: "Precio",
+                        data: monthsPrices,
+                      backgroundColor:  'rgba(3,169,244, 1)'
+                    },
+                    {
+                      label: "Ganancia",
+                        data: monthsProfits,
+                      backgroundColor:  'rgba(129,199,132, 1)'
+                    }
+                ]
+            },
+            options: {
+                 scales: {
+                    yAxes: [{
                         ticks: {
                             beginAtZero: true
                         }

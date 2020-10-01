@@ -176,5 +176,15 @@ namespace DAL.Repositories
                 " WHERE CLIENTNAME = '" + clientName + "'";
             return _context.Database.SqlQuery<Order>(query).FirstOrDefault();
         }
+
+        public IList<MonthInfo> MonthsInfo()
+        {
+            var query = " SELECT DATENAME(month, O.[CreatedDate]) as 'Month', COUNT(*), " +
+                        " SUM(TotalCost) AS 'Cost', SUM(TotalPrice) AS 'Price', " +
+                        " SUM(TotalPrice - TotalCost) AS 'Profit' " +
+                        " FROM Orders O" +
+                        " GROUP BY DATENAME(month, O.[CreatedDate])";
+            return _context.Database.SqlQuery<MonthInfo>(query).ToList();
+        }
     }
 }
