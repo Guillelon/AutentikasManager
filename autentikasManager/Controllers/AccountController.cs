@@ -57,7 +57,7 @@ namespace autentikasManager.Controllers
         [AllowAnonymous]
         public ActionResult Login()
         {
-            return View();
+            return RedirectToAction("Error", "Home", null);
         }
 
         //

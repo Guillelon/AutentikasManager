@@ -320,6 +320,7 @@
     <Content Include="Views\Home\Dashboard.cshtml" />
     <Content Include="Views\Package\Index.cshtml" />
     <Content Include="Views\Package\Edit.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

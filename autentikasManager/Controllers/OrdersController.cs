@@ -31,7 +31,7 @@ namespace autentikasManager.Controllers
             }
             var viewModel = new IndexViewModel();
             viewModel.Date = queryDate;
-            return View("Index", viewModel);
+            return RedirectToAction("Error", "Home", null);
         }
 
         public string GetData(bool delivered, bool packaged, bool paid)
@@ -49,12 +49,12 @@ namespace autentikasManager.Controllers
 
         public ActionResult Add()
         {
-            return View();
+            return RedirectToAction("Error", "Home", null);
         }
 
         public ActionResult Edit(int id)
         {
-            return View("Add", id);
+            return RedirectToAction("Error", "Home", null);
         }
 
         public string GetOrder(int id)

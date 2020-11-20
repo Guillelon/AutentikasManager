@@ -30,13 +30,13 @@ namespace autentikasManager.Controllers
             var packages = packageRepository.GetAll();
             if (TempData["SuccessMessage"] != null)
                 ViewBag.SuccessMessage = TempData["SuccessMessage"];
-            return View(packages);
+            return RedirectToAction("Error", "Home", null);
         }
 
         public ActionResult Edit(int id)
         {
             var package = packageRepository.GetById(id);
-            return View(package);
+            return RedirectToAction("Error", "Home", null);
         }
 
         [HttpPost]

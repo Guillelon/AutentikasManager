@@ -30,12 +30,12 @@ namespace autentikasManager.Controllers
             viewModel.KookieCount = dto.KookieCount.HasValue ? dto.KookieCount.Value : 0;
             viewModel.PackageCount = ordersRepository.GetPackageCount();
             viewModel.MonthInfo = ordersRepository.MonthsInfo();
-            return View(viewModel);
+            return RedirectToAction("Error", "Home", null);
         }
 
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Error", "Home", null);
         }
 
         public ActionResult Menu()
@@ -47,6 +47,12 @@ namespace autentikasManager.Controllers
         {
             ViewBag.Message = "Your contact page.";
 
+            return View();
+        }
+
+        [AllowAnonymous]
+        public ActionResult Error()
+        {
             return View();
         }
     }
